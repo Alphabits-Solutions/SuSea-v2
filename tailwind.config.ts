@@ -1,0 +1,88 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: "class",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Material Design 3 dark color tokens — single source of truth
+        "primary":                    "#abc7ff",
+        "on-primary":                 "#002f65",
+        "primary-container":          "#1d5bae",
+        "on-primary-container":       "#c3d6ff",
+        "primary-fixed":              "#d7e3ff",
+        "primary-fixed-dim":          "#abc7ff",
+        "on-primary-fixed":           "#001b3f",
+        "on-primary-fixed-variant":   "#00458f",
+        "inverse-primary":            "#205db0",
+        "secondary":                  "#ffb692",
+        "on-secondary":               "#562000",
+        "secondary-container":        "#ed6910",
+        "on-secondary-container":     "#4b1b00",
+        "secondary-fixed":            "#ffdbcb",
+        "secondary-fixed-dim":        "#ffb692",
+        "on-secondary-fixed":         "#341100",
+        "on-secondary-fixed-variant": "#793000",
+        "tertiary":                   "#a2c9ff",
+        "on-tertiary":                "#00315b",
+        "tertiary-container":         "#1a5e9f",
+        "on-tertiary-container":      "#bcd7ff",
+        "tertiary-fixed":             "#d3e4ff",
+        "tertiary-fixed-dim":         "#a2c9ff",
+        "on-tertiary-fixed":          "#001c38",
+        "on-tertiary-fixed-variant":  "#004881",
+        "error":                      "#ffb4ab",
+        "on-error":                   "#690005",
+        "error-container":            "#93000a",
+        "on-error-container":         "#ffdad6",
+        "surface":                    "#131315",
+        "surface-dim":                "#131315",
+        "surface-bright":             "#39393b",
+        "surface-container-lowest":   "#0e0e10",
+        "surface-container-low":      "#1b1b1d",
+        "surface-container":          "#1f1f21",
+        "surface-container-high":     "#2a2a2c",
+        "surface-container-highest":  "#353437",
+        "surface-variant":            "#353437",
+        "surface-tint":               "#abc7ff",
+        "on-surface":                 "#e4e2e4",
+        "on-surface-variant":         "#c3c6d3",
+        "inverse-surface":            "#e4e2e4",
+        "inverse-on-surface":         "#303032",
+        "background":                 "#131315",
+        "on-background":              "#e4e2e4",
+        "outline":                    "#8d909c",
+        "outline-variant":            "#434751",
+      },
+      fontFamily: {
+        headline: ["var(--font-plus-jakarta)", "sans-serif"],
+        body:     ["var(--font-inter)", "sans-serif"],
+        label:    ["var(--font-inter)", "sans-serif"],
+        mono:     ["var(--font-jetbrains)", "monospace"],
+      },
+      borderRadius: {
+        DEFAULT: "0.125rem",
+        lg:      "0.25rem",
+        xl:      "0.5rem",
+        full:    "0.75rem",
+      },
+      keyframes: {
+        marquee: {
+          "0%":   { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        marquee: "marquee 30s linear infinite",
+      },
+    },
+  },
+  plugins: [require("@tailwindcss/typography")],
+};
+
+export default config;

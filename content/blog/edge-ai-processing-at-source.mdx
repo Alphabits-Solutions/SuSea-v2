@@ -1,0 +1,63 @@
+---
+title: "Edge AI: Processing at the Source"
+slug: "edge-ai-processing-at-source"
+date: "2023-11-15"
+category: "engineering"
+readTime: "8 min read"
+author: "David Chen"
+authorRole: "Chief Architect"
+excerpt: "Running AI inference at the network edge — on devices, in factories, at the point of data generation — eliminates latency, reduces bandwidth costs, and enables use cases that cloud-first architectures simply cannot support."
+featured: false
+---
+
+Every millisecond that data travels from a sensor to a cloud data centre and back is a millisecond of latency that cannot be recovered. For use cases like real-time quality inspection, autonomous vehicle perception, and surgical robotics, cloud inference is not an option — the physics don't allow it.
+
+But edge AI is not just for latency-critical applications. For any use case where data generation is distributed, frequent, and bandwidth-constrained, edge inference delivers cost and performance benefits that are difficult to match with centralised architectures.
+
+## The Edge AI Deployment Spectrum
+
+Edge AI spans a wide range of hardware and use case categories:
+
+**On-device** — inference on smartphones, wearables, and consumer electronics. Models must be extremely small (sub-100MB) and highly optimised. Apple's Core ML and Google's TensorFlow Lite define this space.
+
+**Near-edge** — inference on industrial edge computers (NVIDIA Jetson, Intel NUC) deployed close to data sources. Models up to several gigabytes. Sub-10ms latency achievable.
+
+**Edge data centres** — small-scale compute facilities (a server rack, a facility room) that serve a local geographic area. Full model sizes possible. Millisecond latency to nearby devices.
+
+## When Edge Wins
+
+### Real-Time Physical Control
+
+Robot arms, CNC machines, autonomous vehicles, and surgical systems require inference latency in the 1–10ms range. Cloud inference, with round-trip times of 20–100ms even under ideal conditions, is incompatible with these requirements.
+
+### Bandwidth-Constrained Environments
+
+A factory with 200 HD cameras generating inspection images at 30fps produces approximately 1 Tbps of data. Sending this to the cloud is not economically or technically viable. Edge inference processes frames locally and transmits only exceptions (defect detections) — reducing bandwidth requirements by 99%+.
+
+### Data Sovereignty Requirements
+
+Certain industries (healthcare, financial services, government) face regulatory requirements that prohibit data from leaving specific geographic boundaries. Edge AI keeps sensitive data local by design.
+
+### Connectivity-Independent Operation
+
+Edge AI systems continue operating when network connectivity is unavailable or unreliable — critical for field service, maritime, mining, and remote monitoring applications.
+
+## The Implementation Trade-offs
+
+Edge AI is not a free lunch. The trade-offs are real:
+
+**Model capability ceiling** — the models that run efficiently on edge hardware are smaller and generally less capable than cloud-hosted models. Task-specific fine-tuning can close this gap for well-defined use cases.
+
+**Model update logistics** — updating models deployed across thousands of edge devices is operationally complex. OTA (over-the-air) update infrastructure is a significant engineering investment.
+
+**Hardware heterogeneity** — deploying the same model across devices from multiple vendors with different hardware accelerators (NPUs, GPUs, DSPs) requires careful optimisation and testing.
+
+## Architecture Pattern: Hybrid Edge-Cloud
+
+For most enterprise deployments, the optimal architecture is hybrid: edge inference for latency-sensitive and bandwidth-constrained tasks, cloud inference for complex reasoning and model training.
+
+The edge handles the high-frequency, low-complexity decisions. The cloud handles the low-frequency, high-complexity decisions and the training signal that continuously improves the edge models.
+
+---
+
+*Designing an edge AI architecture for your operation? [Our team](/contact) has deployed production edge systems across manufacturing and healthcare.*

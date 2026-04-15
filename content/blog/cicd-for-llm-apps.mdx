@@ -1,0 +1,74 @@
+---
+title: "CI/CD for LLM Apps: Testing the Untestable"
+slug: "cicd-for-llm-apps"
+date: "2024-04-10"
+category: "engineering"
+readTime: "11 min read"
+author: "David Chen"
+authorRole: "Chief Architect"
+excerpt: "Traditional CI/CD pipelines assume deterministic tests. LLMs are probabilistic. Here's how to build a deployment pipeline that gives you confidence without waiting for 100% test coverage that will never arrive."
+featured: false
+---
+
+The standard software engineering answer to "how do I deploy with confidence?" is "write more tests." This breaks down completely when applied to LLM applications. You cannot write a unit test that asserts a language model will always respond with exactly the right answer.
+
+But you can build a pipeline that catches regressions, validates behaviour within acceptable bounds, and gives your team the confidence to ship.
+
+## Why LLM Testing is Different
+
+Three properties of language models make traditional testing inadequate:
+
+**Non-determinism** — the same input produces different outputs across runs (even at temperature=0 in some implementations). Your test suite needs to account for this.
+
+**Emergent failure modes** — LLMs fail in ways that are hard to anticipate in advance. A change to your system prompt might improve performance on one class of inputs while silently degrading performance on another.
+
+**Evaluation requires intelligence** — determining whether an LLM output is "correct" often requires another LLM or human judgement. Binary pass/fail tests cannot capture nuanced quality.
+
+## The LLM CI/CD Stack
+
+### Layer 1: Deterministic Tests (Fast, Cheap)
+
+These tests run on every commit and gate merges. They cover the parts of your system that are deterministic:
+
+- **Schema validation** — does the output conform to expected JSON/structured format?
+- **Length constraints** — is the output within acceptable length bounds?
+- **Prohibited content** — does the output contain strings that should never appear (PII patterns, competitor names, deprecated terminology)?
+- **Tool call validation** — if the model makes function calls, do they conform to expected schemas?
+
+These should run in under 30 seconds and have zero false positives. If they're flaky, they erode trust and get disabled.
+
+### Layer 2: LLM-as-Judge Evaluation (Medium Speed, Medium Cost)
+
+For each output, a second LLM (ideally a different model from a different provider) evaluates quality on defined dimensions. This is not a perfect solution, but it is scalable and catches a large proportion of quality regressions.
+
+Dimensions to evaluate:
+- Faithfulness to the retrieved context (for RAG systems)
+- Relevance to the user's question
+- Tone and style consistency
+- Absence of hallucination markers
+
+The output is a score distribution. Your CI pipeline passes if the score distribution is within N standard deviations of your baseline.
+
+### Layer 3: Human Evaluation Samples (Slow, Expensive, Necessary)
+
+A random sample of outputs from each deployment candidate is reviewed by human evaluators before promotion to production. This cannot be eliminated — LLM-as-judge evaluators have systematic biases that only human review catches.
+
+Practical approach: 50–100 samples, reviewed by 2 evaluators, with agreement threshold. This can be completed in 2–4 hours for a weekly release cadence.
+
+### Layer 4: Production Monitoring (Continuous)
+
+After deployment, every production output is scored by your LLM-as-judge system. Significant drops in score distributions trigger alerts and can trigger automated rollbacks.
+
+## The Pipeline Architecture
+
+```
+commit → unit tests (30s) → LLM eval suite (5min) →
+staging deploy → human review sample (4h) →
+production deploy → continuous monitoring
+```
+
+The key insight: you are not trying to achieve 100% confidence before deployment. You are trying to detect regressions quickly enough to roll back before they cause significant harm.
+
+---
+
+*Building your LLM deployment pipeline? [Our engineering team](/contact) can design the evaluation framework.*

@@ -1,0 +1,55 @@
+---
+title: "Serverless Inference: Pros and Cons"
+slug: "serverless-inference-pros-cons"
+date: "2023-12-20"
+category: "engineering"
+readTime: "6 min read"
+author: "Dr. Elara Vance"
+authorRole: "Head of Engineering"
+excerpt: "Serverless GPU inference has matured significantly. It is now a viable option for many production workloads — but the trade-offs are real. Here is an honest assessment."
+featured: false
+---
+
+Serverless GPU compute — platforms like Modal, RunPod Serverless, and AWS Lambda with container support — has changed the deployment calculus for ML inference workloads.
+
+For many teams, serverless inference eliminates the most painful operational burden: managing GPU instances, handling scale-to-zero, and paying for idle capacity. But it introduces a different set of constraints that are not always visible in benchmark comparisons.
+
+## The Case For
+
+**Zero idle cost.** A dedicated GPU instance running at 20% utilisation still costs the same as one running at 100%. Serverless pays only for actual compute consumed. For bursty, low-traffic workloads, this can reduce infrastructure costs by 60–80%.
+
+**Automatic scaling.** Traffic spikes are handled by the platform, not by an on-call engineer. For teams without dedicated infrastructure capacity, this is a significant operational relief.
+
+**Reduced DevOps burden.** No instance management, no AMI updates, no capacity planning. Your team deploys a container; the platform handles the rest.
+
+**Fast iteration.** Deploying a new model version is a container push. No instance reconfiguration, no rolling restart management.
+
+## The Case Against
+
+**Cold start latency.** The fundamental challenge of serverless compute — cold starts — is more severe for GPU workloads. Loading a 7B model from storage and warming it in GPU memory takes 15–30 seconds on most platforms. For latency-sensitive applications, this is prohibitive without mitigation.
+
+**Per-request overhead.** Serverless platforms introduce per-request overhead (typically 10–50ms) that dedicated inference servers do not. At high request rates, this compounds.
+
+**Cost crossover.** Serverless is cheaper than dedicated infrastructure up to a certain request rate. Above that rate — which varies by model size and platform but is typically around 40–60% GPU utilisation — dedicated instances become cheaper. Getting this analysis wrong is expensive.
+
+**Vendor dependency.** The managed nature of serverless platforms means you are dependent on the provider's reliability and pricing decisions. Migrating is non-trivial once your deployment pipeline is built around a specific platform.
+
+## Mitigation Strategies
+
+**Cold start mitigation:** Most platforms offer "warm pool" or "minimum instances" features that keep a baseline of warm instances available. This eliminates cold starts for normal traffic while still providing scale-out for spikes. The cost is a floor on your idle spend.
+
+**Request batching:** For batch inference workloads (not real-time), grouping requests reduces per-request overhead and improves GPU utilisation on serverless platforms.
+
+## Decision Framework
+
+| Characteristic | Use Serverless | Use Dedicated |
+|---|---|---|
+| Traffic pattern | Bursty, unpredictable | Consistent, high-volume |
+| Latency requirement | &gt;500ms acceptable | &lt;200ms required |
+| Team DevOps capacity | Limited | Strong |
+| Request volume | Low to medium | High |
+| Cost optimisation focus | Idle cost | Per-request cost |
+
+---
+
+*Choosing between serverless and dedicated inference for your workload? [Our team can model the economics.](/contact)*

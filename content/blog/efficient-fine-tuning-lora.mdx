@@ -1,0 +1,71 @@
+---
+title: "Efficient Fine-Tuning with LoRA"
+slug: "efficient-fine-tuning-lora"
+date: "2024-01-15"
+category: "engineering"
+readTime: "10 min read"
+author: "Dr. Elara Vance"
+authorRole: "Head of Engineering"
+excerpt: "Full fine-tuning of large language models is prohibitively expensive for most organisations. LoRA (Low-Rank Adaptation) makes domain-specific customisation practical at a fraction of the cost — here's the complete technical guide."
+featured: false
+---
+
+Fine-tuning a 70B parameter model end-to-end requires approximately 140GB of GPU memory — roughly 2× the capacity of an A100 80GB. For most organisations, this is not a realistic option.
+
+LoRA (Low-Rank Adaptation) solves this. It allows you to fine-tune a large model by updating only a small number of additional parameters while keeping the original model weights frozen. The result: equivalent or better task-specific performance at 10–100× lower compute cost.
+
+## How LoRA Works
+
+LoRA operates on the insight that the weight updates during fine-tuning have low intrinsic rank. Rather than updating the full weight matrices W, LoRA decomposes the update into two small matrices:
+
+```
+ΔW = BA
+where B is d×r and A is r×k, with r << min(d, k)
+```
+
+During training, only A and B are updated. W is frozen. At inference time, the adapted weights are BA + W, which can be computed offline and merged with the original weights — zero additional inference overhead.
+
+**Memory requirement comparison for a 7B model:**
+
+| Method | GPU Memory |
+|---|---|
+| Full fine-tuning (fp16) | 112 GB |
+| LoRA (r=16) | 18 GB |
+| QLoRA (4-bit + LoRA) | 10 GB |
+
+## QLoRA: LoRA on Quantised Models
+
+QLoRA combines LoRA with 4-bit quantisation of the base model, pushing the memory requirement down further. The base model is loaded in 4-bit precision (using NF4 quantisation), LoRA adapters are trained in 16-bit, and gradients flow through the quantised weights via dequantisation.
+
+This enables fine-tuning a 70B model on a single 40GB A100. For most enterprise use cases, this is the practical default.
+
+## Practical Configuration
+
+**Rank selection:** Start with r=16 for most tasks. Higher rank (r=64, r=128) improves performance on complex tasks at the cost of more trainable parameters. Lower rank (r=4, r=8) is sufficient for simple style adaptation tasks.
+
+**Target modules:** Apply LoRA to attention projection matrices (q_proj, k_proj, v_proj, o_proj) and optionally MLP layers. Applying to all linear layers increases trainable parameters but often improves performance.
+
+**Alpha:** Set alpha = 2× rank as a starting point. Alpha controls the scaling of the LoRA update relative to the original weights.
+
+## Data Requirements
+
+LoRA is efficient with data as well as compute. We have achieved significant performance improvements on domain-specific tasks with as few as 500–1,000 high-quality examples. For most enterprise customisation use cases:
+
+- **Tone and style adaptation:** 200–500 examples
+- **Domain terminology:** 500–2,000 examples
+- **Task-specific behaviour:** 1,000–5,000 examples
+- **Complex reasoning adaptation:** 5,000–20,000 examples
+
+Quality matters more than quantity. 500 carefully curated examples consistently outperform 5,000 scraped examples in our benchmarks.
+
+## When LoRA Is Not the Answer
+
+LoRA is a parameter-efficient adaptation technique. It is not a solution for:
+
+- **Fundamental knowledge gaps** — if the base model lacks relevant knowledge, LoRA will not inject it reliably. Use RAG instead.
+- **Safety alignment** — modifying safety behaviour through LoRA is technically possible but operationally dangerous.
+- **Massive behavioural shifts** — if you need the model to behave fundamentally differently from its base training, full fine-tuning or a different base model may be required.
+
+---
+
+*Ready to fine-tune a model on your domain data? [Our ML team](/contact) delivers production-ready fine-tuning pipelines.*

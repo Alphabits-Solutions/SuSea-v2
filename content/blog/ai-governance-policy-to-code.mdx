@@ -1,0 +1,67 @@
+---
+title: "AI Governance: From Policy to Code"
+slug: "ai-governance-policy-to-code"
+date: "2024-01-30"
+category: "strategy"
+readTime: "7 min read"
+author: "Sarah Jenkins"
+authorRole: "Ops Strategy"
+excerpt: "Most AI governance frameworks live in policy documents. The organisations that actually control their AI systems have turned those policies into code — automated checks that run continuously in production."
+featured: false
+---
+
+Every organisation deploying AI at scale needs an AI governance framework. Most have one. Almost none have translated it from a policy document into operational controls.
+
+The gap between "we have an AI ethics policy" and "our AI systems enforce those policies automatically" is where most governance failures happen.
+
+## Why Policy Documents Are Not Enough
+
+A policy that says "AI systems must not discriminate on the basis of protected characteristics" is not a control. It is a statement of intent. Controls are the mechanisms that detect, prevent, and report on policy violations.
+
+The policy lives in a SharePoint folder. The AI system runs in production. They have no connection to each other.
+
+## The Governance-as-Code Framework
+
+The shift to governance-as-code means three things:
+
+**Automated policy checks** — every AI output that makes a decision affecting individuals is evaluated against defined fairness metrics before it is acted upon.
+
+**Continuous monitoring dashboards** — aggregate statistics on model behaviour (approval rates by demographic group, confidence score distributions, error patterns) are visible to designated oversight roles in near real-time.
+
+**Escalation pipelines** — when a metric breaches a threshold, the system automatically escalates to a human reviewer and can pause the AI's decision-making authority pending review.
+
+## Implementing the Framework
+
+### Step 1: Policy Translation
+
+Take each governance policy statement and translate it into measurable criteria. 
+
+Policy: *"The AI system must not produce outputs that are discriminatory."*
+
+Translated: *"The selection rate for Group X must be within 20% of the selection rate for the highest-selecting protected group (four-fifths rule). Selection rates are measured weekly. A breach triggers human review within 24 hours."*
+
+### Step 2: Instrumentation
+
+Every AI decision point must emit structured events that capture the data needed to evaluate the translated criteria. If you cannot measure it, you cannot enforce it.
+
+### Step 3: Evaluation Layer
+
+A lightweight evaluation service receives decision events and applies the translated criteria. Compliant decisions pass through; non-compliant decisions are flagged, logged, and routed to human review.
+
+### Step 4: Audit Trail
+
+All evaluation results — pass and fail — are written to an immutable audit log. This is the evidence layer: when a regulator asks "how do you know your AI is compliant?", the answer is the audit log.
+
+### Step 5: Governance Dashboard
+
+Aggregate metrics are surfaced to AI governance officers, legal, compliance, and board-level AI risk committees on a cadence appropriate to the risk level of each system.
+
+## The Organisational Reality
+
+Governance-as-code requires cross-functional ownership. Engineering builds and maintains the technical controls. Legal and compliance define the policy criteria. The AI governance function owns the monitoring and escalation. Leadership owns accountability.
+
+Getting these functions aligned is harder than the technical implementation. Start with a single high-risk AI system, build the governance infrastructure for it, and use it as the template for the rest of the portfolio.
+
+---
+
+*Building your AI governance infrastructure? [Our team](/contact) helps organisations translate policy into automated controls.*

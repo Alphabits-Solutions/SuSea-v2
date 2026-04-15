@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Brand Utilities ─────────────────────────────────────────────────────── */
+@layer utilities {
+  .signature-gradient {
+    background: linear-gradient(135deg, #6ba3e8, #2b5ba8 50%, #e8650a);
+  }
+
+  .signature-text-gradient {
+    background: linear-gradient(135deg, #6ba3e8, #2b5ba8 50%, #e8650a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-gradient {
+    background: linear-gradient(135deg, #abc7ff, #1d5bae);
+  }
+
+  .editorial-gradient-text {
+    background: linear-gradient(135deg, #abc7ff, #205db0 50%, #ed6910);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-panel {
+    background: rgba(53, 52, 55, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ─── Material Symbols font variation ───────────────────────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: rgb(171 199 255 / 0.3);
+  color: #abc7ff;
+}

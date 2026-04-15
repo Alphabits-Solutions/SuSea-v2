@@ -1,0 +1,56 @@
+---
+title: "The Future of Agentic Workflows"
+slug: "future-of-agentic-workflows"
+date: "2024-05-20"
+category: "strategy"
+readTime: "7 min read"
+author: "Marcus Thorne"
+authorRole: "Managing Partner"
+excerpt: "Agentic AI — systems that plan, act, and learn over extended time horizons — is moving from research labs to production. What changes when AI stops answering questions and starts taking actions?"
+featured: false
+---
+
+The shift from AI as a question-answering tool to AI as an action-taking agent is the most significant transition in enterprise software since the move to the cloud. And most organisations are nowhere near ready for it.
+
+## What Makes a Workflow "Agentic"
+
+A traditional AI workflow is reactive and single-step: input in, output out. An agentic workflow is:
+
+- **Multi-step** — the agent plans a sequence of actions to achieve a goal
+- **Tool-using** — the agent interacts with external systems (databases, APIs, browsers, code execution)
+- **Iterative** — the agent evaluates its progress and adjusts its approach based on intermediate results
+- **Long-running** — tasks may take minutes, hours, or days to complete
+
+The canonical example is a research agent that is given a business question, autonomously searches multiple sources, synthesises findings, identifies gaps, conducts follow-up research, and produces a structured report — all without human intervention at each step.
+
+## The Five Agentic Patterns
+
+After deploying agentic systems across multiple industries, we have identified five recurring architectural patterns:
+
+**Orchestrator-Worker** — a planning agent decomposes tasks and delegates subtasks to specialised worker agents. Best for complex, heterogeneous workflows.
+
+**Reflection Loop** — an agent produces output, a critic agent evaluates it, and the producing agent revises. Best for quality-sensitive tasks like code generation and content creation.
+
+**RAG-Augmented Agent** — the agent dynamically retrieves relevant information from a knowledge base at each reasoning step. Best for knowledge-intensive tasks.
+
+**Human-in-the-Loop** — the agent pauses at defined checkpoints and requests human review before proceeding. Best for high-stakes decisions with regulatory implications.
+
+**Event-Driven Agent** — the agent is triggered by external events (a new email, a database record update, a market signal) and responds autonomously. Best for operational workflows.
+
+## What Changes When AI Takes Actions
+
+Three things change fundamentally when you move from AI-as-advisor to AI-as-actor:
+
+**Reversibility** — a wrong answer can be corrected. A wrong action — a sent email, a placed order, a deleted file — cannot always be undone. Every agentic workflow needs a defined rollback strategy.
+
+**Auditability** — you need to know exactly what the agent did and why. Not just the final output, but every intermediate decision, every tool call, every document retrieved. This is both an operational requirement and a regulatory expectation.
+
+**Failure modes** — agents fail differently from models. They don't just produce wrong answers; they take wrong actions, sometimes in ways that compound. Your operational runbooks need to account for this.
+
+## The Adoption Curve
+
+The organisations that will capture the most value from agentic AI over the next three years are the ones starting their governance infrastructure now. The technology is available today. The operational readiness — logging, rollback, human oversight protocols — is what separates successful deployments from expensive incidents.
+
+---
+
+*Designing your first agentic workflow? [Our team](/services/agents) has deployed production agentic systems across 6 industries.*

@@ -1,0 +1,59 @@
+---
+title: "Bias Mitigation in Hiring Agents"
+slug: "bias-mitigation-hiring-agents"
+date: "2024-03-05"
+category: "ethics"
+readTime: "9 min read"
+author: "Elena Vance"
+authorRole: "Head of Design"
+excerpt: "AI hiring tools promise faster, more consistent screening. The evidence on bias is more complicated. Here is what the research shows, and what responsible deployment actually requires."
+featured: false
+---
+
+The promise of AI in hiring is compelling: remove the inconsistency of human reviewers, screen larger candidate pools, and make decisions based on job-relevant criteria rather than unconscious affinity biases.
+
+The reality is more complicated. AI hiring tools can remove some human biases while introducing new ones — often at scale and with less visibility than their human equivalents.
+
+## Where Bias Enters AI Hiring Systems
+
+### Training Data Bias
+
+Most resume screening models are trained on historical hiring decisions. If your historical hires skew toward a particular demographic — by intent, by structural barriers, or by network effects — a model trained to replicate those decisions will learn to replicate that skew.
+
+This is not a hypothetical. Amazon's famous 2018 scrapped recruiting tool penalised CVs that included the word "women's" (as in "women's chess club") because the training data was dominated by historical male hires.
+
+### Proxy Variable Bias
+
+Even if demographic features are explicitly excluded from a model, proxy variables can encode the same information. Postcode correlates with ethnicity and socioeconomic background. University name correlates with socioeconomic background and geography. Employment gap patterns correlate with caregiving responsibilities that disproportionately affect women.
+
+A model that has learned to use these proxies to predict "good hires" (as defined by historical data) will produce disparate impact even without any explicit demographic input.
+
+### Feedback Loop Bias
+
+Once an AI screening tool is deployed, its outputs influence future training data. Candidates rejected by the AI are never hired. They never appear as positive examples in future model training. Over time, the model's biases self-reinforce.
+
+## What Responsible Deployment Requires
+
+### Disparate Impact Analysis
+
+Before deployment, measure the model's selection rates across protected groups. If the selection rate for any protected group is less than 80% of the highest-selecting group (the "four-fifths rule" under US EEOC guidelines), the model has potential discriminatory impact and must be adjusted or justified.
+
+This analysis must be repeated after every model update and every significant change to the input data distribution.
+
+### Explainability for Rejected Candidates
+
+In the EU (under GDPR Article 22) and increasingly in US jurisdictions, candidates have the right to a meaningful explanation of automated decisions that affect them. Your hiring AI must be able to produce candidate-facing explanations that identify the factors that influenced the decision.
+
+"The algorithm said so" is not a sufficient explanation and creates significant legal exposure.
+
+### Human Review Gates
+
+AI screening tools should be positioned as a first filter that expands human review capacity, not as a final decision-maker. Every AI rejection should be reviewable, and a sample of AI-approved candidates should be reviewed to catch systematic errors in the approval direction as well.
+
+### Regular Audit by External Parties
+
+Internal bias audits have systematic blind spots. Annual external audits by qualified fairness researchers should be standard practice for any AI system that makes decisions affecting employment.
+
+---
+
+*Building AI hiring tools that are both effective and equitable? [Talk to our ethics and engineering team.](/contact)*

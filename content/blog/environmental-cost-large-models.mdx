@@ -1,0 +1,59 @@
+---
+title: "The Environmental Cost of Large Models"
+slug: "environmental-cost-large-models"
+date: "2023-12-01"
+category: "ethics"
+readTime: "7 min read"
+author: "Elena Vance"
+authorRole: "Head of Design"
+excerpt: "Training GPT-4 consumed an estimated 50 GWh of electricity. As AI scales, the environmental cost is no longer ignorable. Here's how organisations can make more responsible infrastructure choices."
+featured: false
+---
+
+The AI industry has a carbon problem. It is not unique to AI — every compute-intensive industry faces the same challenge — but the pace of AI adoption and the scale of training runs has put it in sharper relief.
+
+Ignoring this problem is no longer a viable organisational strategy. Not because of regulatory pressure (though that is coming), but because the organisations that solve it will have a durable cost advantage over those that do not.
+
+## The Numbers
+
+Training a large language model from scratch is extraordinarily energy intensive:
+
+- GPT-3 (175B parameters): estimated ~1,287 MWh
+- GPT-4 (estimated ~1.8T parameters): estimated ~50,000 MWh
+- A single A100 GPU running at full capacity: ~400W
+
+For inference at scale, the numbers compound differently. A single query to a large model costs a fraction of a cent in electricity. Multiply by billions of daily queries, and the aggregate is significant.
+
+The good news: inference efficiency is improving rapidly, and the infrastructure choices organisations make about where and how they run AI workloads have a material impact on total carbon footprint.
+
+## Where Organisations Have Control
+
+### Model Selection
+
+The most significant lever. A 7B parameter model consumes roughly 15× less energy per inference than a 70B model. For many tasks, the smaller model delivers equivalent or superior performance — because smaller models are often better calibrated for specific domains than large general models.
+
+Organisations routinely default to the largest available model. This is not always the right choice, and it is rarely the most carbon-efficient one.
+
+### Infrastructure Location and Timing
+
+Cloud providers vary significantly in the proportion of renewable energy powering their data centres. AWS, GCP, and Azure all publish carbon intensity by region. Running inference workloads in regions with high renewable penetration (Oregon, Ireland, the Nordics) reduces the carbon footprint of the same compute by 60–90% compared to coal-heavy regions.
+
+For non-latency-sensitive batch workloads, time-shifting to off-peak hours or periods of high renewable availability on the grid reduces effective carbon intensity further.
+
+### Inference Optimisation
+
+Every efficiency improvement is also a carbon improvement:
+
+- Quantisation (4-bit, 8-bit) reduces compute and therefore energy
+- Caching frequent responses eliminates redundant computation entirely
+- Batching improves GPU utilisation and reduces energy per token
+
+## The Business Case
+
+Beyond environmental responsibility, there is a straightforward business case. Reduced inference energy = reduced inference cost. The same architectural choices that lower your carbon footprint lower your cloud bill.
+
+The organisations that have invested in inference efficiency as a discipline — not just as a cost-cutting exercise — are running AI at 40–80% lower cost than peers using equivalent models on equivalent infrastructure.
+
+---
+
+*Want to measure and reduce the environmental footprint of your AI workloads? [Our team can audit your stack.](/contact)*

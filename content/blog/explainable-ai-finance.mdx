@@ -1,0 +1,63 @@
+---
+title: "Explainable AI for Finance"
+slug: "explainable-ai-finance"
+date: "2023-10-15"
+category: "strategy"
+readTime: "9 min read"
+author: "Marcus Thorne"
+authorRole: "Managing Partner"
+excerpt: "Financial services regulators are increasingly requiring that AI decisions affecting customers can be explained. Here's what explainability means in practice — and how to build it without sacrificing model performance."
+featured: false
+---
+
+When a bank's AI rejects a mortgage application, the applicant has a legal right to know why. When a trading algorithm executes a large order, the compliance team needs to be able to reconstruct the decision chain. When an underwriting model prices a policy, the actuary needs to be able to validate the factors driving the premium.
+
+Explainability in financial AI is not an optional feature. It is a regulatory requirement in most jurisdictions — and it is becoming more stringent, not less.
+
+## The Regulatory Landscape
+
+**EU AI Act (2024)** — Financial services AI is classified as "high-risk". High-risk AI systems must provide explanations of their outputs to affected individuals and to supervisory authorities on request.
+
+**SR 11-7 (US Federal Reserve)** — Model risk management guidance requires that model developers understand why a model produces its outputs, and that this understanding can be communicated to validators, auditors, and supervisors.
+
+**GDPR Article 22** — Individuals have the right not to be subject to decisions based solely on automated processing, and to obtain "meaningful information about the logic involved."
+
+## The Explainability Spectrum
+
+Not all explainability requirements are equal. There are three distinct audiences with different needs:
+
+**The affected individual** — a customer who received a credit decision needs an explanation they can understand and act on. Technical feature importance scores are not appropriate. Plain language explanations of the key factors are.
+
+**The internal validator** — a model validator or risk manager needs to understand the model's behaviour across the full distribution of inputs, not just for a single decision. Aggregate feature importance, partial dependence plots, and adversarial testing results are appropriate.
+
+**The regulator** — supervisory authorities need to be satisfied that the model produces fair outcomes and that the institution has governance processes in place to detect and remediate failures. They need documentation, not just technical outputs.
+
+## Implementing Explainability
+
+### SHAP for Feature Attribution
+
+SHAP (SHapley Additive exPlanations) is the current standard for feature attribution in financial models. It provides a theoretically grounded, consistent way to attribute a model's output to its input features.
+
+For each individual decision, SHAP values can be:
+- Aggregated into customer-facing explanations ("Your application was affected primarily by your debt-to-income ratio and the length of your credit history")
+- Visualised for internal model validation
+- Monitored over time to detect drift in feature importance
+
+### Monotonicity Constraints
+
+For models where the expected relationship between a feature and the output is directional (higher income → higher creditworthiness, more debt → lower creditworthiness), monotonicity constraints can be applied during training to ensure the model learns the expected relationship.
+
+Constrained models are easier to explain, easier to validate, and more likely to produce outputs that align with business and regulatory expectations — often with minimal performance cost.
+
+### Model Cards and Datasheets
+
+Every production model in a regulated financial services context should have:
+- A model card documenting intended use, performance characteristics, and known limitations
+- A datasheet documenting the training data, its provenance, and any known biases
+- A validation report summarising the independent review of the model
+
+These documents are the evidence layer for regulatory review. Without them, you cannot demonstrate governance.
+
+---
+
+*Building explainable AI for financial services? [Our team specialises in regulated industry deployments.](/contact)*

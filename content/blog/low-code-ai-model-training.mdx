@@ -1,0 +1,53 @@
+---
+title: "Low-Code AI Model Training: A New Paradigm"
+slug: "low-code-ai-model-training"
+date: "2024-07-15"
+category: "engineering"
+readTime: "6 min read"
+author: "David Chen"
+authorRole: "Chief Architect"
+excerpt: "Low-code ML platforms are maturing fast. Here's an honest assessment of where they deliver genuine value — and where they create hidden technical debt."
+featured: false
+---
+
+Three years ago, the idea of a non-engineer training a production-grade ML model would have been laughable. Today, platforms like AWS SageMaker Canvas, Google Vertex AI AutoML, and a growing ecosystem of low-code tools make it a real possibility.
+
+This is genuinely exciting. It is also genuinely dangerous if you don't understand the trade-offs.
+
+## Where Low-Code ML Delivers Real Value
+
+### Prototyping and Validation
+
+Low-code platforms are excellent for the "does this even work?" phase. Before investing engineering resources in a custom pipeline, proving that a model trained on your data can achieve acceptable accuracy in a few hours is extremely valuable.
+
+### Domain Expert Involvement
+
+Subject matter experts — clinicians, underwriters, quality engineers — often have the best intuition about which features matter. Low-code tools let them run experiments without a data scientist translating every request into code.
+
+### Tabular Data Tasks
+
+Classification and regression on structured, tabular data is the sweet spot for AutoML. If your use case is "predict churn from CRM data" or "classify invoices by category", low-code tools will get you 80–90% of the way there with a fraction of the effort.
+
+## Where Low-Code ML Creates Hidden Debt
+
+### The Feature Engineering Ceiling
+
+Every low-code platform automates feature engineering to some degree. But the features it generates from your raw data are a black box. When the model underperforms in production, you often have no clear path to diagnosing *why*.
+
+### Deployment Lock-In
+
+Models trained on managed platforms often export in formats that are tightly coupled to that platform's inference infrastructure. Migrating to a different serving environment — for cost, latency, or compliance reasons — becomes a retraining project.
+
+### Monitoring Blind Spots
+
+Low-code platforms provide basic monitoring, but rarely the fine-grained drift detection and alerting that production systems require. You often discover your model has degraded when a business metric moves, not when your ML monitoring alerts.
+
+## The Right Mental Model
+
+Think of low-code ML as **scaffolding, not structure**. Use it to move fast, validate assumptions, and involve domain experts. Then replace the scaffolding with proper engineering when you're shipping to production.
+
+The organisations that get this right use low-code for the 20% of the effort that answers 80% of the research questions, and custom engineering for the production systems that actually run the business.
+
+---
+
+*Building a path from low-code prototype to production ML? [Our engineering team](/services/consulting) can design the migration.*

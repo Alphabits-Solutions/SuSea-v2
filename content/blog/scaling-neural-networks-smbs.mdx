@@ -1,0 +1,58 @@
+---
+title: "Scaling Neural Networks for SMBs"
+slug: "scaling-neural-networks-smbs"
+date: "2024-06-28"
+category: "engineering"
+readTime: "8 min read"
+author: "Dr. Elara Vance"
+authorRole: "Head of Engineering"
+excerpt: "Enterprise-scale neural network deployment was once the exclusive domain of companies with nine-figure AI budgets. The infrastructure economics have shifted dramatically — here's how SMBs can compete."
+featured: false
+---
+
+The economics of running neural networks at scale have changed faster than most enterprise technology trends. What cost $50,000 a month to run three years ago can now be achieved for under $3,000. This is not theoretical — it is the actual infrastructure trajectory our clients are experiencing.
+
+For SMBs, this creates a genuine competitive opportunity. But capturing it requires understanding which of the new options are real and which are marketing.
+
+## The Infrastructure Shift
+
+Three developments have democratised neural network deployment for smaller organisations:
+
+**Quantisation and model compression** have made it possible to run capable models on significantly cheaper hardware. A 7B parameter model running in 4-bit precision on a single A10G GPU delivers performance that would have required 4× the hardware two years ago.
+
+**Spot instance pricing** on AWS, GCP, and Azure has brought down the cost of GPU compute by 60–70% for workloads that can tolerate interruption. Most inference workloads can be architected to handle this with proper queuing.
+
+**Open-weight models** (Llama, Mistral, Phi) have removed the per-token API cost for many use cases. If you're doing 50M tokens a month, running your own inference endpoint pays back in months.
+
+## The Right Architecture for SMB Scale
+
+The mistake most SMBs make is replicating enterprise architecture at small scale. A full MLOps pipeline with feature stores, model registries, and multi-region deployment is overkill and expensive to maintain.
+
+The right architecture for 1–50 person AI teams:
+
+### Inference
+
+- Single GPU instance (A10G or L4) for most use cases
+- Serverless GPU (Modal, RunPod, or AWS Lambda with container) for bursty workloads
+- Cached responses for high-frequency, low-variability queries (cuts compute by 40–60%)
+
+### Orchestration
+
+- LangChain or LlamaIndex for agent pipelines (don't build your own)
+- Redis for conversation state and short-term memory
+- Postgres + pgvector for retrieval (avoid running a separate vector database until you're at scale)
+
+### Monitoring
+
+- Langfuse or Helicone for LLM observability (free tiers cover SMB usage)
+- Basic latency and cost dashboards before sophisticated drift detection
+
+## What Not to Do
+
+Do not build your own model serving infrastructure unless you have a dedicated ML engineer. vLLM is excellent, but it requires maintenance. Use managed serving (Bedrock, Vertex, or a specialist provider) and migrate to owned infrastructure when the economics justify it.
+
+Do not run your own embedding service until you have over 10M documents. Managed embedding APIs (OpenAI, Cohere, Voyage) are cheap, reliable, and eliminate an entire class of operational burden.
+
+---
+
+*Want to design the right AI infrastructure for your scale? [Book an architecture consultation.](/contact)*

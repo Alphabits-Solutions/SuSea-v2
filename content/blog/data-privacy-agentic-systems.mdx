@@ -1,0 +1,66 @@
+---
+title: "Data Privacy in Agentic Systems"
+slug: "data-privacy-agentic-systems"
+date: "2024-02-18"
+category: "security"
+readTime: "8 min read"
+author: "David Chen"
+authorRole: "Chief Architect"
+excerpt: "Agentic AI systems access far more data than traditional applications — and retain it in ways that are difficult to audit. Here's how to build agents that are powerful without being a privacy liability."
+featured: false
+---
+
+Traditional enterprise applications access data in well-defined, auditable ways. A user clicks a button, a query runs, a record is returned. The data access is scoped, logged, and predictable.
+
+Agentic AI systems break this model. An agent given access to a company's knowledge base, email system, and CRM doesn't just retrieve the records a user explicitly requested. It retrieves everything that might be relevant to the task — and it carries that context across an extended session, across tool calls, and potentially across users.
+
+## The Privacy Surface of an Agentic System
+
+When you deploy an agent with broad tool access, the data privacy surface includes:
+
+**The context window** — everything the agent has retrieved and processed in the current session. This may include documents from multiple users, confidential records, and PII that was never meant to be co-located.
+
+**The memory store** — if your agent uses long-term memory, information from previous sessions can influence future responses in ways that are difficult to audit or control.
+
+**Tool call logs** — every database query, API call, and file read the agent performs. These logs are essential for audit but can themselves become a privacy liability if not properly protected.
+
+**The model itself** — if your agent is built on a fine-tuned model, training data that includes PII can theoretically be extracted through carefully crafted prompts.
+
+## Privacy-by-Design for Agents
+
+### Principle of Least Access
+
+Define the minimum data access required for each agent to perform its function. An invoice processing agent does not need access to HR records. A customer service agent does not need access to financial forecasts.
+
+Implement this at the tool level, not the prompt level. Do not rely on the agent's instructions to enforce access boundaries — implement access control in the tools themselves.
+
+### Session Isolation
+
+Agent sessions should not share context unless explicitly designed to do so. User A's conversation should not influence User B's responses, even if both users are querying the same knowledge base.
+
+Implement session isolation through separate context windows, separate memory namespaces, and careful review of any shared state.
+
+### Right to Erasure Compliance
+
+Under GDPR Article 17, individuals have the right to have their personal data erased. For agentic systems, this requirement is complex: you may need to delete data from:
+
+- The vector index (for RAG systems)
+- The conversation history store
+- The agent's long-term memory
+- Any fine-tuned model weights that include the individual's data
+
+Build your data architecture with erasure pathways designed in from the start. Retrofitting is expensive and often incomplete.
+
+### Audit Logging
+
+Every significant data access event should be logged with:
+- The agent session identifier
+- The data accessed (at the document/record level, not the content level)
+- The user context that triggered the access
+- The timestamp and tool call identifier
+
+These logs should be retained for a period consistent with your regulatory obligations and should be reviewed regularly for anomalous patterns.
+
+---
+
+*Building privacy-compliant agentic systems? [Our security team](/services/security) can design the data architecture.*

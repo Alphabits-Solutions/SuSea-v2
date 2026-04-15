@@ -1,0 +1,255 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import JsonLd from "@/components/JsonLd";
+import { buildMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Vibe Code Rescue — AI-Generated Code to Production",
+  description:
+    "GPT-4 can write code, but it doesn't build architectures. We take your AI-prototyped codebase and transform it into a secure, scalable, and maintainable production asset.",
+  path: "/services/vibe-code-rescue",
+});
+
+const PAIN_POINTS = [
+  { icon: "warning", title: "The \"It Works, But...\" Wall", desc: "The app runs fine on your local machine, but crashes the moment three users try to sign up simultaneously or you try to deploy to AWS." },
+  { icon: "lock_reset", title: "Security Afterthoughts", desc: "AI models frequently overlook CORS, CSRF, and SQL injection vulnerabilities. Your prototype might be leaking data you haven't checked yet." },
+  { icon: "psychology_alt", title: "Hallucinated Dependencies", desc: "Your codebase is a house of cards built on outdated libraries or npm packages that don't actually exist in the modern ecosystem." },
+];
+
+const FULL_STACK = [
+  { icon: "bug_report", title: "Hallucination Fixes", desc: "Removing ghost logic and ensuring every function call is grounded in real-world API specs." },
+  { icon: "security", title: "Security Hardening", desc: "Implementing enterprise-grade auth, encryption at rest, and penetration testing for AI-written modules." },
+  { icon: "speed", title: "Performance Tuning", desc: "Refactoring inefficient loops and database queries that AI tends to generate for simple tasks." },
+  { icon: "hub", title: "Architecture Design", desc: "Transitioning \"flat-file\" AI projects into professional Microservices or Clean Architecture patterns." },
+  { icon: "cloud_done", title: "CI/CD & DevOps", desc: "Automating deployments so your AI iterations don't break production every time you push code." },
+  { icon: "description", title: "Documentation", desc: "Creating technical docs so humans (and future AI) can actually understand how your app works." },
+];
+
+const AUDIT_STEPS = [
+  { num: 1, title: "Deep Static Analysis", desc: "Automated scanning for security vulnerabilities and architectural inconsistencies." },
+  { num: 2, title: "Human Intelligence Review", desc: "Senior engineers manually review the core business logic to ensure it actually solves your problem." },
+  { num: 3, title: "Risk Assessment Report", desc: "We present a detailed breakdown of \"Production Blockers\" vs. \"Nice to Refactor\" items." },
+  { num: 4, title: "Execution & Rescue", desc: "Rapid refactoring sprints to stabilize your codebase and prepare for launch." },
+];
+
+const AUDIT_INSIGHTS = [
+  { color: "border-primary", label: "Audit Insight #402", labelColor: "text-primary", text: "Critical: API endpoint exposing unencrypted user metadata in headers. AI failed to implement JWT validation.", offset: "" },
+  { color: "border-secondary", label: "Audit Insight #109", labelColor: "text-secondary", text: "Warning: Sub-optimal database join detected in main dashboard loop. Latency > 1200ms with N>50.", offset: "translate-x-12" },
+  { color: "border-primary", label: "Audit Insight #221", labelColor: "text-primary", text: "Systemic: Global state management collision in frontend. Prop-drilling exceeds 8 levels deep.", offset: "-translate-x-4" },
+];
+
+const SERVICE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Vibe Code Rescue",
+  url: "https://susea.ai/services/vibe-code-rescue",
+  provider: { "@type": "Organization", name: "Susea.ai" },
+  description: "Transform AI-prototyped codebases into secure, scalable, production-ready software.",
+  areaServed: ["US", "GB", "EU"],
+};
+
+export default function VibeCodeRescuePage() {
+  return (
+    <>
+      <JsonLd data={SERVICE_SCHEMA} />
+
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 px-8 overflow-hidden">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+          <div className="flex-1 space-y-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-highest/50 border border-outline-variant/20">
+              <span className="material-symbols-outlined text-primary text-sm">build_circle</span>
+              <span className="text-xs font-label uppercase tracking-widest text-primary">AI Code Rescue Service</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-headline font-extrabold tracking-tight leading-none text-on-surface">
+              Your AI-Generated App{" "}
+              <span className="signature-text-gradient">Isn&apos;t Production.</span> We&apos;ll Make It One.
+            </h1>
+            <p className="text-lg text-on-surface-variant max-w-xl">
+              GPT-4 can write code, but it doesn&apos;t build architectures. We take your AI-prototyped
+              codebase and transform it into a secure, scalable, and maintainable production asset.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/contact"
+                className="signature-gradient px-8 py-4 rounded-xl font-headline font-bold text-lg shadow-lg hover:opacity-90 transition-all active:scale-95 text-white"
+              >
+                Initiate Strategy
+              </Link>
+              <button className="bg-surface-container-highest text-on-surface px-8 py-4 rounded-xl font-headline font-bold text-lg border border-outline-variant/30 hover:bg-surface-variant transition-all">
+                View Engineering Specs
+              </button>
+            </div>
+          </div>
+
+          {/* Code diff visual */}
+          <div className="flex-1 w-full max-w-2xl">
+            <div className="relative rounded-xl overflow-hidden border border-outline-variant/20 shadow-2xl">
+              <div className="bg-surface-container-highest px-4 py-2 flex items-center gap-2 border-b border-outline-variant/20">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                <span className="ml-4 text-xs font-mono text-on-surface-variant">diff_production_rescue.py</span>
+              </div>
+              <div className="p-6 bg-[#0e0e10] font-mono text-sm leading-relaxed overflow-x-auto">
+                <div className="flex gap-4 opacity-40">
+                  <span className="text-red-400">-</span>
+                  <code className="text-red-300"># AI Generated: No error handling, hardcoded keys</code>
+                </div>
+                <div className="flex gap-4 opacity-40">
+                  <span className="text-red-400">-</span>
+                  <code className="text-red-300">def process_data(input): return db.save(input)</code>
+                </div>
+                <div className="flex gap-4 mt-2">
+                  <span className="text-green-400">+</span>
+                  <code className="text-green-300"># Production Ready: Validated, Typed, Secure</code>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-green-400">+</span>
+                  <code className="text-green-300">async def process_data(payload: SecureSchema):</code>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-green-400">+</span>
+                  <code className="text-green-300">{"   "}try:</code>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-green-400">+</span>
+                  <code className="text-green-300">{"      "}validated = await validator.clean(payload)</code>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-green-400">+</span>
+                  <code className="text-green-300">{"      "}return await repository.save(validated)</code>
+                </div>
+                <div className="flex gap-4">
+                  <span className="text-green-400">+</span>
+                  <code className="text-green-300">{"   "}except Exception as e: logger.critical(e)</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute top-0 right-0 -z-10 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full" aria-hidden />
+        <div className="absolute bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-secondary-container/10 blur-[100px] rounded-full" aria-hidden />
+      </section>
+
+      {/* Sound Familiar */}
+      <section className="py-24 px-8 bg-surface-container-low" aria-labelledby="pain-heading">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16">
+            <h2 id="pain-heading" className="text-4xl md:text-5xl font-headline font-bold text-on-surface mb-4">
+              Sound Familiar?
+            </h2>
+            <p className="text-lg text-on-surface-variant max-w-2xl">
+              The gap between a working AI demo and a reliable software product is wider than it looks.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {PAIN_POINTS.map(({ icon, title, desc }) => (
+              <div
+                key={title}
+                className="p-8 rounded-xl bg-surface-container border border-outline-variant/10 hover:border-primary/40 transition-all duration-500"
+              >
+                <span className="material-symbols-outlined text-secondary text-4xl mb-6 block">{icon}</span>
+                <h3 className="text-xl md:text-2xl font-headline font-bold mb-4">{title}</h3>
+                <p className="text-lg text-on-surface-variant">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Full Stack of Problems */}
+      <section className="py-24 px-8" aria-labelledby="full-stack-heading">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 id="full-stack-heading" className="text-4xl md:text-5xl font-headline font-bold text-on-surface mb-4">
+              We Cover the Full Stack of Problems
+            </h2>
+            <p className="text-lg text-on-surface-variant mx-auto max-w-2xl">
+              From deep logic errors to infrastructure scaling, our engineers audit and refactor every layer.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {FULL_STACK.map(({ icon, title, desc }) => (
+              <div key={title} className="glass-panel p-8 rounded-xl border border-outline-variant/10 group">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                  <span className="material-symbols-outlined text-primary">{icon}</span>
+                </div>
+                <h4 className="text-xl font-headline font-bold mb-2">{title}</h4>
+                <p className="text-lg text-on-surface-variant">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Audit Process */}
+      <section className="py-24 px-8 bg-surface-container-low/50" aria-labelledby="audit-heading">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <h2 id="audit-heading" className="text-4xl md:text-5xl font-headline font-bold text-on-surface mb-8">
+                We Don&apos;t Guess. We Audit First.
+              </h2>
+              <p className="text-lg text-on-surface-variant mb-12">
+                Engineering precision requires a diagnostic approach. We don&apos;t just start typing; we map
+                the entire codebase ecosystem to find the critical failure points.
+              </p>
+              <div className="space-y-8">
+                {AUDIT_STEPS.map(({ num, title, desc }) => (
+                  <div key={num} className="flex gap-6">
+                    <div className="flex-none w-12 h-12 rounded-full border border-primary flex items-center justify-center text-primary font-bold shrink-0">
+                      {num}
+                    </div>
+                    <div>
+                      <h5 className="text-xl font-headline font-bold mb-1">{title}</h5>
+                      <p className="text-lg text-on-surface-variant">{desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="aspect-square bg-surface-container rounded-3xl border border-outline-variant/20 p-8 flex flex-col justify-center gap-6 overflow-hidden">
+                {AUDIT_INSIGHTS.map(({ color, label, labelColor, text, offset }) => (
+                  <div key={label} className={`p-6 rounded-xl bg-surface-container-high shadow-xl border-l-4 ${color} ${offset}`}>
+                    <div className={`text-xs font-label uppercase ${labelColor} mb-2`}>{label}</div>
+                    <div className="text-sm font-mono text-on-surface-variant">{text}</div>
+                  </div>
+                ))}
+                <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-[80px]" aria-hidden />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 px-8">
+        <div className="max-w-5xl mx-auto signature-gradient rounded-[2rem] p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="relative z-10 space-y-8">
+            <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-white leading-tight">
+              Stop Guessing. <br className="hidden md:block" />
+              Start Shipping Production Code.
+            </h2>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+              Get a comprehensive audit of your AI-generated codebase within 48 hours. We&apos;ll identify
+              the gaps and give you a roadmap to production stability.
+            </p>
+            <div className="pt-4">
+              <Link
+                href="/contact"
+                className="inline-block bg-on-primary text-primary px-10 py-5 rounded-xl font-headline font-bold text-xl hover:bg-white transition-colors shadow-2xl"
+              >
+                Free Codebase Audit
+              </Link>
+            </div>
+            <p className="text-xs font-label text-white/60 uppercase tracking-widest">
+              No credit card required • NDA Protected • Expert Analysis
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

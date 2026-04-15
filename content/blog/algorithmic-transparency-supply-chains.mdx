@@ -1,0 +1,67 @@
+---
+title: "Algorithmic Transparency in Modern Supply Chains"
+slug: "algorithmic-transparency-supply-chains"
+date: "2024-08-22"
+category: "operations"
+readTime: "9 min read"
+author: "Sarah Jenkins"
+authorRole: "Ops Strategy"
+excerpt: "As AI takes over procurement, routing, and demand forecasting decisions, supply chain leaders face a new obligation: being able to explain what their algorithms decided and why."
+featured: false
+---
+
+In 2023, a major European retailer was fined €4.2M for an AI-driven procurement system that systematically deprioritised suppliers from certain regions — a bias embedded in the training data that nobody had noticed for 14 months.
+
+The fine was not for the bias itself. It was for the inability to explain the decision trail.
+
+Algorithmic transparency is no longer a philosophical nice-to-have. In supply chains, it is a legal and operational imperative.
+
+## Why Supply Chains Are High-Stakes Territory for AI
+
+Supply chain AI touches three categories of decisions that regulators are increasingly scrutinising:
+
+**Supplier selection** — algorithms that determine who gets business can encode historical biases around geography, company size, and ownership structure.
+
+**Demand forecasting** — opaque models that drive procurement decisions can create downstream effects on employment and regional economies that companies are now expected to account for.
+
+**Dynamic pricing** — real-time AI pricing systems that interact with competitors' systems can create conditions that resemble coordinated behaviour, even without intent.
+
+## The Three Layers of Transparency
+
+### Layer 1: Decision Logging
+
+Every significant decision made by a supply chain AI should produce a structured log entry that captures:
+
+- The input data state at decision time
+- The model version that generated the output
+- The confidence score and alternative options considered
+- The human (if any) who reviewed or approved the decision
+
+This is not a nice-to-have for audits. It is the minimum required to diagnose failures and demonstrate due diligence.
+
+### Layer 2: Explainability at the Feature Level
+
+When a supplier asks "why was my bid rejected?", your procurement AI needs to be able to answer. This requires:
+
+- Feature importance attribution (SHAP values, LIME, or similar)
+- Human-readable summaries of the top factors
+- Comparison against the accepted bid where appropriate
+
+### Layer 3: Governance Documentation
+
+At the portfolio level, you need to be able to answer the question: "What is this AI doing to our supplier relationships across the entire network?" This requires regular bias audits, disparity impact analyses, and board-level reporting.
+
+## Implementation Approach
+
+We recommend building transparency infrastructure before deploying decision-making AI, not retroactively. The cost of retrofitting logging and explainability into a live system is typically 3–5× higher than building it correctly from the start.
+
+The components:
+
+1. A feature store with versioning and lineage tracking
+2. Model cards for every deployed model, updated on every retrain
+3. A decision audit trail database with defined retention policies
+4. A bias monitoring dashboard reviewed monthly
+
+---
+
+*Need help building transparent AI infrastructure for your supply chain? [Talk to our team.](/contact)*

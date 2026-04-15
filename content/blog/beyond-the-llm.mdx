@@ -1,0 +1,61 @@
+---
+title: "Beyond the LLM: Architecting Durable AI Infrastructure"
+slug: "beyond-the-llm"
+date: "2024-11-15"
+category: "strategy"
+readTime: "8 min read"
+author: "Marcus Thorne"
+authorRole: "Managing Partner"
+excerpt: "Why most generative AI prototypes fail at scale and the structural changes needed to bridge the gap between demo and production."
+featured: false
+---
+
+Why do 70% of enterprise AI pilots fail to reach production? The answer is rarely the model. It's almost always the infrastructure surrounding it.
+
+## The Demo-to-Production Gap
+
+A language model running in a Jupyter notebook is not an enterprise product. Between that notebook and a production system that handles 10,000 concurrent users sits a chasm that most teams underestimate.
+
+The gap includes:
+
+- **Observability** — you can't improve what you can't measure
+- **Reliability** — fallbacks, retries, and graceful degradation
+- **Cost governance** — budget controls and per-request cost tracking
+- **Data pipelines** — freshness, quality, and retrieval architecture
+- **Security** — authentication, authorisation, and prompt boundaries
+
+## What Durable AI Infrastructure Looks Like
+
+### Layer 1: The Data Plane
+
+Everything starts with data. Before a single prompt is written, you need:
+
+1. A clean, versioned, and documented data store
+2. A retrieval strategy (vector search, keyword, hybrid) matched to your use case
+3. Freshness guarantees — stale data produces stale responses
+
+### Layer 2: The Orchestration Layer
+
+This is where most teams cut corners. The orchestration layer manages:
+
+- **Context management** — what information reaches the model and in what order
+- **Tool use** — how agents interact with external systems
+- **State persistence** — how conversations maintain continuity across sessions
+
+### Layer 3: The Evaluation Loop
+
+Production AI systems degrade silently. Without continuous evaluation, you won't know your model's performance has drifted until a customer complains.
+
+Build evaluation into your CI/CD pipeline from day one.
+
+## The Architectural Principle
+
+> Build for the failure mode, not the happy path.
+
+Every component should have a defined behaviour when things go wrong. What does the system do when the LLM API is unavailable? When retrieval returns nothing? When latency exceeds your SLA?
+
+The teams that answer these questions before launch are the ones with AI in production. The others are still in pilot.
+
+---
+
+*Ready to build AI infrastructure that lasts? [Start a conversation](/contact) with our architecture team.*

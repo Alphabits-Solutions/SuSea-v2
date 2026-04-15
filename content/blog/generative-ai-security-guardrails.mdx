@@ -1,0 +1,71 @@
+---
+title: "Generative AI Security Guardrails"
+slug: "generative-ai-security-guardrails"
+date: "2024-06-05"
+category: "security"
+readTime: "10 min read"
+author: "David Chen"
+authorRole: "Chief Architect"
+excerpt: "As generative AI moves into customer-facing and internal enterprise workflows, the attack surface expands dramatically. These are the guardrails every production deployment needs."
+featured: false
+---
+
+Prompt injection is the SQL injection of the AI era. And just like SQL injection was dismissed as an edge case by many teams in the early 2000s, prompt injection is being systematically underestimated today.
+
+This is not a theoretical risk. We have audited production systems where a single crafted user message could exfiltrate the entire system prompt, bypass content filters, or cause the agent to perform unauthorised actions on behalf of the attacker.
+
+## The Threat Model
+
+Before implementing guardrails, you need a clear threat model. The three primary adversarial objectives against a generative AI system are:
+
+**Extraction** — retrieving information the model has access to but should not disclose. System prompts, retrieved documents, other users' conversation history.
+
+**Manipulation** — changing the model's behaviour in ways the operator did not intend. Bypassing content policies, impersonating different personas, executing unauthorised tool calls.
+
+**Amplification** — using the AI as a vector to attack downstream systems. Injecting malicious content into outputs that will be processed by other systems, databases, or users.
+
+## The Guardrail Stack
+
+### Input Validation
+
+Every user input should pass through a validation layer before reaching the model:
+
+1. **Length limits** — long inputs can exhaust context and crowd out the system prompt
+2. **Content classification** — a fast, cheap classifier to flag adversarial patterns before they reach the expensive model
+3. **PII detection** — prevent sensitive data from being sent to external APIs inadvertently
+
+We use a small, fast classification model (typically a fine-tuned BERT variant) as a first-pass filter. This costs under 0.1ms and catches 80%+ of known injection patterns.
+
+### Prompt Architecture
+
+The structure of your prompt is itself a security control:
+
+- System instructions should be separated from user content with clear delimiters that are hard to escape
+- Tool permissions should be specified explicitly, not implicitly
+- The prompt should state what the model should do when it detects adversarial input — most models will follow these instructions
+
+### Output Validation
+
+Don't trust model output blindly:
+
+- Validate that structured outputs conform to expected schemas before consuming them
+- Redact PII patterns from outputs before displaying to users
+- Log all outputs for post-hoc audit — if something goes wrong, you need the receipts
+
+### Tool Call Sandboxing
+
+If your agent executes tool calls, each tool should operate under a principle of least privilege:
+
+- Database queries should use read-only credentials unless write access is explicitly required for that tool
+- File system access should be restricted to a defined sandbox directory
+- API calls should be rate-limited and logged
+
+## The Red Team Test
+
+Before launching any customer-facing AI system, run a structured red team exercise. Ask someone with adversarial intent — ideally an external security researcher — to spend 4 hours trying to break it.
+
+The findings will surprise you. They always do.
+
+---
+
+*Our team conducts AI security audits for enterprise deployments. [Book a security review.](/services/security)*
