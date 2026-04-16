@@ -124,14 +124,7 @@ export default async function BlogPage() {
                 href={`/blog/${post.slug}`}
                 className="group"
               >
-                <article>
-                  <div className="aspect-[16/10] bg-surface-container rounded-xl mb-6 overflow-hidden">
-                    <div className="w-full h-full signature-gradient opacity-10 group-hover:opacity-30 transition-opacity flex items-center justify-center">
-                      <span className="material-symbols-outlined text-5xl text-primary">
-                        article
-                      </span>
-                    </div>
-                  </div>
+                <article className="p-6 bg-surface-container rounded-xl border border-outline-variant/10 group-hover:border-primary/20 transition-colors h-full flex flex-col">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded-full">
                       {post.category}
@@ -143,10 +136,10 @@ export default async function BlogPage() {
                   <h3 className="text-xl font-headline font-bold mb-3 group-hover:text-primary transition-colors leading-snug">
                     {post.title}
                   </h3>
-                  <p className="text-on-surface-variant text-sm line-clamp-2 mb-4">
+                  <p className="text-on-surface-variant text-sm line-clamp-3 mb-4 flex-1">
                     {post.excerpt}
                   </p>
-                  <span className="text-sm font-label text-on-surface-variant/60 font-mono">
+                  <span className="text-sm font-label text-on-surface-variant/60 font-mono mt-auto">
                     {new Date(post.date).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",

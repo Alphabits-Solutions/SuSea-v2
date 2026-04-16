@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import FAQSection from "@/components/ui/FAQSection";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -108,6 +109,43 @@ const TIERS = [
   },
 ];
 
+const FAQS = [
+  {
+    q: "What's included in the monthly maintenance?",
+    a: "Every month we perform dependency updates, security patch application, log analysis and anomaly detection, database query optimisation, cloud cost reviews, and a written status report. The Architect and Custom tiers include additional emergency hours and strategic reviews.",
+  },
+  {
+    q: "How do emergency hours work?",
+    a: "Emergency hours are pre-allocated blocks of engineering time for critical bug fixes or urgent deployments. If you exceed your monthly allocation, additional hours are billed at a fixed rate agreed in advance — no surprise invoices.",
+  },
+  {
+    q: "What is your uptime guarantee?",
+    a: "Our monitoring covers 24/7 alerting with a 15-minute response window. We cannot guarantee uptime for infrastructure we don't control (e.g., your cloud provider), but we manage all dependencies and respond to incidents immediately.",
+  },
+  {
+    q: "Can you maintain a codebase you didn't build?",
+    a: "Yes. We perform an initial technical audit of any inherited codebase before commencing maintenance. This surfaces critical issues upfront and allows us to establish a baseline for ongoing work.",
+  },
+  {
+    q: "Do you handle multi-cloud environments?",
+    a: "Yes. We support AWS, Google Cloud, and Azure individually or in combination. Our engineers are certified across all three major platforms and have experience with complex multi-region and hybrid cloud setups.",
+  },
+  {
+    q: "How do I escalate a critical issue outside business hours?",
+    a: "Architect and Custom tier clients have access to a dedicated Slack priority channel monitored 24/7. Essential tier clients can escalate via email with a 4-hour response SLA during business hours.",
+  },
+];
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -123,9 +161,10 @@ export default function MaintenancePage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
+      <JsonLd data={FAQ_SCHEMA} />
 
       {/* Hero */}
-      <section className="relative min-h-[819px] flex items-center justify-center px-6 overflow-hidden pt-20">
+      <section className="relative min-h-[819px] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-20">
         <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" aria-hidden>
           <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-primary/30 rounded-full blur-[120px]" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-secondary-container/20 rounded-full blur-[100px]" />
@@ -134,7 +173,7 @@ export default function MaintenancePage() {
           <div className="inline-block px-4 py-1.5 rounded-full bg-surface-container-highest border border-outline-variant/15 text-primary text-xs uppercase tracking-widest font-bold">
             Managed Maintenance
           </div>
-          <h1 className="font-headline text-6xl md:text-8xl font-extrabold tracking-tighter leading-[0.95] signature-text-gradient">
+          <h1 className="font-headline text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter leading-[0.95] signature-text-gradient">
             Your Tech, Fully Covered. Year-Round.
           </h1>
           <p className="max-w-2xl mx-auto text-on-surface-variant text-xl md:text-2xl leading-relaxed">
@@ -368,8 +407,11 @@ export default function MaintenancePage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <FAQSection faqs={FAQS} title="Managed Maintenance FAQs" />
+
       {/* CTA */}
-      <section className="py-32 px-8">
+      <section className="py-24 md:py-32 px-4 md:px-8">
         <div className="max-w-5xl mx-auto signature-gradient rounded-[2rem] p-12 md:p-20 text-center relative overflow-hidden">
           <div
             className="absolute inset-0 opacity-10"

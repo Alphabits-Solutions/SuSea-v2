@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import FAQSection from "@/components/ui/FAQSection";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -34,6 +35,43 @@ const PROCESS = [
 
 const COMPLIANCE = ["SOC2 TYPE II", "ISO 27001", "HIPAA", "GDPR", "PCI DSS", "CCPA"];
 
+const FAQS = [
+  {
+    q: "What does a security audit involve?",
+    a: "Our audit covers network penetration testing, application code review, cloud infrastructure scanning, identity & access management review, and social engineering assessments. You receive a prioritised remediation report within 5 business days.",
+  },
+  {
+    q: "How do you handle AI-specific security risks?",
+    a: "We assess prompt injection vulnerabilities, data leakage through LLM APIs, model inversion attacks, and shadow AI usage by employees. We also implement governance policies to ensure corporate data never enters public LLM training pipelines.",
+  },
+  {
+    q: "Which compliance frameworks do you support?",
+    a: "We support SOC 2 Type II, ISO 27001, HIPAA, GDPR, PCI DSS, and CCPA. We work with your legal and compliance teams to prepare documentation and evidence packages for certification audits.",
+  },
+  {
+    q: "What is a vCISO and do we need one?",
+    a: "A Virtual CISO provides executive-level security leadership without the cost of a full-time hire. If you don't have a dedicated CISO but handle sensitive data or are pursuing compliance certifications, a vCISO engagement is highly recommended.",
+  },
+  {
+    q: "How quickly can you respond to a security incident?",
+    a: "Our Incident Response team operates 24/7 with a 1-hour acknowledgement SLA and a 4-hour initial containment protocol for active breaches. We provide post-incident forensic reports and remediation roadmaps.",
+  },
+  {
+    q: "Do you work with startups or only large enterprises?",
+    a: "We work with companies at every stage. Startups benefit enormously from early security hardening — it's far cheaper to build secure than to fix breaches later. We offer right-sized engagements for Series A through Fortune 500.",
+  },
+];
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -48,9 +86,10 @@ export default function SecurityPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
+      <JsonLd data={FAQ_SCHEMA} />
 
       {/* Hero */}
-      <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden px-6 pt-20">
+      <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden px-4 md:px-6 pt-20">
         <div className="absolute inset-0 z-0" aria-hidden>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-20 blur-[120px] rounded-full signature-gradient" />
         </div>
@@ -63,7 +102,7 @@ export default function SecurityPage() {
               Enterprise Security Excellence
             </span>
           </div>
-          <h1 className="font-headline text-6xl md:text-7xl font-extrabold tracking-tighter mb-8 leading-[1.1]">
+          <h1 className="font-headline text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter mb-8 leading-[1.1]">
             Security Isn&apos;t Optional.
             <br />
             <span className="signature-text-gradient">Neither Are We.</span>
@@ -95,8 +134,8 @@ export default function SecurityPage() {
 
       {/* Stat Cards */}
       <section className="py-32 bg-surface-container-low relative overflow-hidden" aria-labelledby="stats-heading">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
             <div>
               <span className="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-4 block">
                 The Real Cost
@@ -204,8 +243,11 @@ export default function SecurityPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <FAQSection faqs={FAQS} title="Security & Compliance FAQs" />
+
       {/* CTA */}
-      <section className="py-32 px-8">
+      <section className="py-24 md:py-32 px-4 md:px-8">
         <div className="max-w-5xl mx-auto signature-gradient rounded-[2rem] p-12 md:p-20 text-center relative overflow-hidden">
           <div
             className="absolute inset-0 opacity-10"

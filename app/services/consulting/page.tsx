@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import FAQSection from "@/components/ui/FAQSection";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -40,6 +41,43 @@ const PILLARS = [
   { icon: "architecture", title: "Technical Debt Injection", desc: "Standard SaaS templates aren't built for the dynamic load of AI. We architect for the 5-year horizon, not the 5-month hype cycle.", span: "md:col-span-8" },
 ];
 
+const FAQS = [
+  {
+    q: "What does an AI Readiness Audit actually involve?",
+    a: "Over 2 weeks, our architects assess your data infrastructure, tech stack, team capabilities, compliance posture, and competitive landscape. You receive a 40+ page report with a prioritised 12-month AI roadmap and ROI projections for each initiative.",
+  },
+  {
+    q: "How long does the consulting engagement take?",
+    a: "The Discovery Intensive takes 48 hours. The full audit and Final Blueprint delivery is typically completed within 10 business days. Ongoing strategic partnerships are structured as quarterly retainers.",
+  },
+  {
+    q: "Do we need to have existing AI infrastructure in place?",
+    a: "Not at all. Many clients come to us at the very start of their AI journey. The audit is equally valuable whether you have zero AI implementation or an existing system you need to scale.",
+  },
+  {
+    q: "What industries do you specialise in?",
+    a: "We have deep expertise in FinTech, Healthcare, E-Commerce, SaaS, Logistics, and Professional Services. However, our strategic frameworks are industry-agnostic and have been applied across 30+ verticals.",
+  },
+  {
+    q: "How do you protect our sensitive business data during the audit?",
+    a: "All engagements begin with a mutual NDA. We operate under strict data handling protocols and can work entirely within your secure environment or via anonymised exports — no proprietary data ever leaves your control.",
+  },
+  {
+    q: "What happens after the Final Blueprint is delivered?",
+    a: "You can execute the roadmap independently, hire our engineering team to build it (via our Hire Dedicated Resources service), or retain us as fractional CTO/AI strategy advisors on an ongoing basis.",
+  },
+];
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -54,15 +92,16 @@ export default function ConsultingPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
+      <JsonLd data={FAQ_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div className="absolute inset-0 bg-background/60" aria-hidden />
-        <div className="relative z-10 max-w-7xl mx-auto px-8 text-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 text-center">
           <span className="inline-block py-1 px-4 rounded-full border border-outline-variant/30 text-xs uppercase tracking-widest text-primary mb-6 bg-surface-container/50">
             Consulting &amp; Readiness
           </span>
-          <h1 className="font-headline text-7xl md:text-9xl font-extrabold tracking-tighter text-on-surface mb-8 leading-[0.9]">
+          <h1 className="font-headline text-5xl sm:text-7xl md:text-9xl font-extrabold tracking-tighter text-on-surface mb-8 leading-[0.9]">
             Know Before <br />
             <span className="signature-text-gradient">You Build.</span>
           </h1>
@@ -91,7 +130,7 @@ export default function ConsultingPage() {
       </section>
 
       {/* Problem Bento */}
-      <section className="py-32 px-8 max-w-7xl mx-auto" aria-labelledby="problems-heading">
+      <section className="py-24 md:py-32 px-4 md:px-8 max-w-7xl mx-auto" aria-labelledby="problems-heading">
         <div className="mb-20">
           <h2 id="problems-heading" className="font-headline text-5xl font-bold tracking-tight text-on-surface mb-4">
             The AI Graveyard Is Full <br />of Good Ideas
@@ -122,8 +161,8 @@ export default function ConsultingPage() {
       </section>
 
       {/* 6 Pillars */}
-      <section className="py-32 bg-surface-container-lowest" aria-labelledby="pillars-heading">
-        <div className="max-w-7xl mx-auto px-8">
+      <section className="py-24 md:py-32 bg-surface-container-lowest" aria-labelledby="pillars-heading">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-20">
             <h2 id="pillars-heading" className="font-headline text-5xl font-bold tracking-tight text-on-surface mb-6">
               Your AI Readiness Report
@@ -146,7 +185,7 @@ export default function ConsultingPage() {
       </section>
 
       {/* 4-Step Roadmap */}
-      <section className="py-32 px-8" aria-labelledby="roadmap-heading">
+      <section className="py-24 md:py-32 px-4 md:px-8" aria-labelledby="roadmap-heading">
         <div className="max-w-7xl mx-auto">
           <h2 id="roadmap-heading" className="font-headline text-5xl font-bold tracking-tight text-on-surface mb-20 text-center">
             From Conversation to Roadmap
@@ -170,8 +209,8 @@ export default function ConsultingPage() {
       </section>
 
       {/* Consulting Scope */}
-      <section className="py-32 bg-surface-container-low border-y border-outline-variant/10" aria-labelledby="scope-heading">
-        <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-20">
+      <section className="py-24 md:py-32 bg-surface-container-low border-y border-outline-variant/10" aria-labelledby="scope-heading">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
           <div>
             <h2 id="scope-heading" className="font-headline text-5xl font-bold tracking-tight text-on-surface mb-8">
               Consulting Scope
@@ -216,8 +255,11 @@ export default function ConsultingPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <FAQSection faqs={FAQS} title="AI Consulting FAQs" />
+
       {/* Final Gradient CTA */}
-      <section className="py-20 px-8">
+      <section className="py-20 px-4 md:px-8">
         <div className="max-w-5xl mx-auto rounded-[2rem] p-12 md:p-24 relative overflow-hidden flex flex-col items-center text-center">
           <div className="absolute inset-0 signature-gradient" aria-hidden />
           <div className="absolute inset-0 bg-surface/20 backdrop-blur-[2px]" aria-hidden />

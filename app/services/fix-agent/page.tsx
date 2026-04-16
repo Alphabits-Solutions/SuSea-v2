@@ -76,7 +76,7 @@ export default function FixAgentPage() {
       <JsonLd data={FAQ_SCHEMA} />
 
       {/* Hero */}
-      <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden px-8 pt-20">
+      <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20">
         <div className="absolute inset-0 z-0 opacity-30" aria-hidden>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary rounded-full blur-[120px] opacity-20" />
           <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-secondary-container rounded-full blur-[100px] opacity-10" />
@@ -85,7 +85,7 @@ export default function FixAgentPage() {
           <span className="text-xs uppercase tracking-[0.2em] text-primary mb-6 block font-label font-bold">
             Optimization &amp; Repair
           </span>
-          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter font-headline mb-8 leading-tight">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter font-headline mb-8 leading-tight">
             Your AI Agent Is{" "}
             <span className="signature-text-gradient">Broken.</span> We&apos;ll Fix It.
           </h1>
@@ -110,7 +110,7 @@ export default function FixAgentPage() {
       </section>
 
       {/* The Problem */}
-      <section className="py-24 px-8 bg-surface-container-low" aria-labelledby="problem-heading">
+      <section className="py-24 px-4 md:px-8 bg-surface-container-low" aria-labelledby="problem-heading">
         <div className="max-w-7xl mx-auto">
           <div className="mb-20">
             <h2 id="problem-heading" className="text-4xl md:text-5xl font-bold font-headline mb-4 tracking-tight">
@@ -135,7 +135,7 @@ export default function FixAgentPage() {
       </section>
 
       {/* What We Fix — Bento */}
-      <section className="py-24 px-8" aria-labelledby="fixes-heading">
+      <section className="py-24 px-4 md:px-8" aria-labelledby="fixes-heading">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div className="max-w-2xl">

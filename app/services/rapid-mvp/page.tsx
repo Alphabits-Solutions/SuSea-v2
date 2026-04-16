@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import JsonLd from "@/components/JsonLd";
+import FAQSection from "@/components/ui/FAQSection";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -33,6 +34,43 @@ const WHATS_INCLUDED = [
 
 const TECH_STACK = ["NEXT.JS", "TYPESCRIPT", "TAILWIND", "STRIPE", "AWS", "POSTGRES"];
 
+const FAQS = [
+  {
+    q: "What exactly can be built in 4 weeks?",
+    a: "A fully functional, production-ready MVP covering your core value proposition. This includes authentication, a database, a primary user workflow, and a polished UI. We scope with brutal honesty in week 1 to ensure everything promised is delivered.",
+  },
+  {
+    q: "Do I retain full ownership of the code?",
+    a: "100%. You receive the full source code, all design assets, and complete documentation on day 1 of deployment. There are no licensing fees, vendor lock-in, or ongoing royalties.",
+  },
+  {
+    q: "What happens if we need more features after launch?",
+    a: "We offer post-MVP scaling packages, can introduce you to our Hire Dedicated Resources service, or help you transition to an in-house team. Most clients move to a 2-week sprint retainer after the initial launch.",
+  },
+  {
+    q: "How involved do we need to be during the build?",
+    a: "You attend two 60-minute syncs per week (Monday planning, Friday review). Outside of that, we handle everything. You don't need to manage day-to-day decisions — that's what you're paying us for.",
+  },
+  {
+    q: "Can you integrate AI features into the MVP?",
+    a: "Absolutely. Many of our MVPs include LLM-powered features such as AI chatbots, content generation, document analysis, or recommendation engines. These are scoped as part of the initial blueprint.",
+  },
+  {
+    q: "What tech stack do you build with?",
+    a: "Our default stack is Next.js (React), TypeScript, PostgreSQL, and Stripe for payments, deployed on AWS or Vercel. We adapt to your requirements — including React Native for mobile, Django/FastAPI for ML-heavy backends, or any other production-grade technology.",
+  },
+];
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -47,6 +85,7 @@ export default function RapidMVPPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
+      <JsonLd data={FAQ_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-[921px] flex flex-col items-center justify-center px-6 overflow-hidden pt-24">
@@ -303,8 +342,11 @@ export default function RapidMVPPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <FAQSection faqs={FAQS} title="Rapid MVP FAQs" />
+
       {/* Final CTA */}
-      <section className="py-40 px-8 relative overflow-hidden">
+      <section className="py-24 md:py-40 px-4 md:px-8 relative overflow-hidden">
         <div className="absolute inset-0 signature-gradient opacity-10" aria-hidden />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="font-headline text-5xl md:text-6xl font-extrabold tracking-tighter mb-12 leading-tight">

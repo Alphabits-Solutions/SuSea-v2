@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import FAQSection from "@/components/ui/FAQSection";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -26,6 +27,43 @@ const HOW_IT_WORKS = [
   { step: "04", title: "Deploy", desc: "Resources join your Slack, Jira, and GitHub. Sprint 1 starts immediately." },
 ];
 
+const FAQS = [
+  {
+    q: "How quickly can a resource start?",
+    a: "After the 20-minute briefing call, we present matched candidates within 48 hours. Once you select your engineer, they can begin within 72 hours — joining your Slack, Jira, and GitHub from day one.",
+  },
+  {
+    q: "How do you vet your engineers?",
+    a: "Every engineer on our bench has completed a multi-stage assessment: a live technical test on their core stack, a systems design interview, and a communication & collaboration evaluation. Only the top 3% of applicants are accepted.",
+  },
+  {
+    q: "What if the resource isn't a good fit?",
+    a: "We offer a 2-week risk-free trial. If for any reason the engineer isn't the right fit, we replace them at zero cost and zero delay. Our replacement track record is under 5%.",
+  },
+  {
+    q: "Who handles payroll, taxes, and contracts?",
+    a: "We handle everything. You pay one monthly invoice. We manage local employment law compliance, payroll, benefits, equipment, and any required legal agreements. Zero administrative overhead on your side.",
+  },
+  {
+    q: "Can dedicated resources work in our time zone?",
+    a: "Yes. We match resources to your preferred working hours and have engineers across North America, Europe, Latin America, and Asia. Time zone alignment is part of the matching criteria.",
+  },
+  {
+    q: "Can we hire the engineer permanently after the engagement?",
+    a: "Yes. We offer a structured transition programme for clients who want to convert a dedicated resource to a permanent employee after a minimum engagement period. Speak to us about the terms.",
+  },
+];
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -40,6 +78,7 @@ export default function HirePage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
+      <JsonLd data={FAQ_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center pt-24 overflow-hidden">
@@ -47,12 +86,12 @@ export default function HirePage() {
           <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
           <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary-container/10 rounded-full blur-[120px]" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full">
           <div className="max-w-4xl">
             <span className="inline-block px-4 py-1.5 rounded-full border border-outline-variant/30 text-xs uppercase tracking-widest text-primary mb-8 font-medium">
               On-Demand Engineering
             </span>
-            <h1 className="text-6xl md:text-8xl font-headline font-extrabold tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-headline font-extrabold tracking-tighter leading-[0.9] mb-8">
               Top Tech Talent.
               <br />
               Your Team.
@@ -283,8 +322,11 @@ export default function HirePage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <FAQSection faqs={FAQS} title="Dedicated Resources FAQs" />
+
       {/* Final CTA Gradient */}
-      <section className="py-24 px-8">
+      <section className="py-24 px-4 md:px-8">
         <div className="max-w-7xl mx-auto signature-gradient rounded-[2rem] p-12 md:p-24 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-black/20" aria-hidden />
           <div className="relative z-10 max-w-3xl mx-auto">

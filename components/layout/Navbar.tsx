@@ -33,7 +33,6 @@ const SERVICES_GROUPS = [
 ];
 
 const OTHER_LINKS = [
-  { label: "Industries", href: "/#industries" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "About", href: "/about" },
 ];
