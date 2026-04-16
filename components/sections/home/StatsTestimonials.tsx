@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 const STATS = [
   { value: "6+", label: "Industries" },
   { value: "7D", label: "Deployment" },
@@ -27,6 +31,13 @@ const TESTIMONIALS = [
 ];
 
 export default function StatsTestimonials() {
+  const [active, setActive] = useState(0);
+
+  const prev = () => setActive((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+  const next = () => setActive((i) => (i + 1) % TESTIMONIALS.length);
+
+  const { quote, role, company } = TESTIMONIALS[active];
+
   return (
     <section className="bg-[#F7F7F5] py-32" aria-label="Stats and testimonials">
       <div className="max-w-7xl mx-auto px-8">
@@ -44,27 +55,54 @@ export default function StatsTestimonials() {
           ))}
         </div>
 
-        {/* Testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map(({ quote, role, company }) => (
-            <figure
-              key={company}
-              className="bg-white p-8 rounded-xl border border-outline-variant/10 shadow-sm"
+        {/* Testimonial slider */}
+        <div className="relative max-w-3xl mx-auto">
+          <figure className="bg-white p-10 md:p-14 rounded-2xl border border-outline-variant/10 shadow-sm text-center">
+            <blockquote className="text-xl md:text-2xl text-inverse-on-surface italic mb-10 leading-relaxed">
+              &ldquo;{quote}&rdquo;
+            </blockquote>
+            <figcaption className="flex flex-col items-center gap-1">
+              <div className="w-12 h-12 rounded-full signature-gradient mb-3" aria-hidden />
+              <cite className="not-italic font-headline font-bold text-inverse-on-surface block">
+                {role}
+              </cite>
+              <span className="text-sm text-inverse-on-surface/60">{company}</span>
+            </figcaption>
+          </figure>
+
+          {/* Controls */}
+          <div className="flex items-center justify-center gap-6 mt-8">
+            <button
+              onClick={prev}
+              aria-label="Previous testimonial"
+              className="w-10 h-10 rounded-full bg-white border border-outline-variant/20 flex items-center justify-center hover:bg-surface-container transition-colors"
             >
-              <blockquote className="text-lg text-inverse-on-surface italic mb-8">
-                &ldquo;{quote}&rdquo;
-              </blockquote>
-              <figcaption className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full signature-gradient shrink-0" aria-hidden />
-                <div>
-                  <cite className="not-italic font-headline font-bold text-inverse-on-surface block">
-                    {role}
-                  </cite>
-                  <span className="text-sm text-inverse-on-surface/60">{company}</span>
-                </div>
-              </figcaption>
-            </figure>
-          ))}
+              <span className="material-symbols-outlined text-inverse-on-surface text-base">chevron_left</span>
+            </button>
+
+            <div className="flex gap-2">
+              {TESTIMONIALS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === active
+                      ? "w-6 h-2 bg-inverse-on-surface"
+                      : "w-2 h-2 bg-inverse-on-surface/30 hover:bg-inverse-on-surface/60"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={next}
+              aria-label="Next testimonial"
+              className="w-10 h-10 rounded-full bg-white border border-outline-variant/20 flex items-center justify-center hover:bg-surface-container transition-colors"
+            >
+              <span className="material-symbols-outlined text-inverse-on-surface text-base">chevron_right</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>

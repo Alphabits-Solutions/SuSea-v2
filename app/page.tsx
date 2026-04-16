@@ -7,6 +7,7 @@ import HowItWorks from "@/components/sections/home/HowItWorks";
 import StatsTestimonials from "@/components/sections/home/StatsTestimonials";
 import CTABand from "@/components/sections/home/CTABand";
 import LatestInsights from "@/components/sections/home/LatestInsights";
+import TeamPreview from "@/components/sections/home/TeamPreview";
 import JsonLd from "@/components/JsonLd";
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from "@/lib/metadata";
 
@@ -35,6 +36,7 @@ export default function HomePage() {
       <IndustriesSection />
       <HowItWorks />
       <StatsTestimonials />
+      <TeamPreview />
       <CTABand />
       <LatestInsights />
     </>

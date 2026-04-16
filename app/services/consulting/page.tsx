@@ -10,6 +10,29 @@ export const metadata: Metadata = buildMetadata({
   path: "/services/consulting",
 });
 
+const READINESS_PILLARS = [
+  { icon: "database", title: "Data Integrity", desc: "Source reliability, ETL pipeline health, and real-time synchronization capabilities." },
+  { icon: "security", title: "Compliance & Privacy", desc: "GDPR, HIPAA, and custom LLM privacy layers for sensitive internal data." },
+  { icon: "lan", title: "Infrastructure Stack", desc: "GPU availability, cloud vs. on-prem hybrid models, and edge computing potential." },
+  { icon: "groups", title: "Talent Gap Analysis", desc: "Assessment of internal engineering readiness and training requirements." },
+  { icon: "trending_up", title: "Market Positioning", desc: "Competitor AI benchmarking and defensible product roadmap strategy." },
+  { icon: "cycle", title: "Scalability Velocity", desc: "Bottleneck detection for when the model grows from pilot to production." },
+];
+
+const ROADMAP_STEPS = [
+  { num: "01", title: "Discovery Intensive", desc: "48-hour deep dive into your current technical stack and business goals." },
+  { num: "02", title: "Data Forensic Audit", desc: "Validation of data cleanliness, accessibility, and structural health." },
+  { num: "03", title: "Risk/Reward Mapping", desc: "Prioritizing high-impact use cases against implementation complexity." },
+  { num: "04", title: "Final Blueprint", desc: "A 12-month engineering roadmap with precise cost projections." },
+];
+
+const SCOPE_ITEMS = [
+  { icon: "verified_user", label: "Enterprise LLM Fine-tuning Strategy" },
+  { icon: "cloud_sync", label: "Multi-Cloud AI Infrastructure Design" },
+  { icon: "analytics", label: "Vector Database Optimization" },
+  { icon: "neurology", label: "Agentic Workflow Orchestration" },
+];
+
 const PILLARS = [
   { icon: "database_off", title: "The Data Swamp", desc: "Building on fragmented, uncleaned data is the fastest way to generate expensive, confident hallucinations. We audit your infrastructure to find the gold in the sludge.", span: "md:col-span-8" },
   { icon: "money_off", title: "ROI Blindness", desc: "Deploying AI because 'everyone else is' leads to vanity metrics and zero bottom-line impact.", span: "md:col-span-4", note: "Case Study: Lost $2M" },
@@ -98,22 +121,127 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-32 px-8 text-center">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-headline text-4xl font-extrabold tracking-tighter mb-6">
-            Get your AI Readiness Score
+      {/* 6 Pillars */}
+      <section className="py-32 bg-surface-container-lowest" aria-labelledby="pillars-heading">
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="text-center mb-20">
+            <h2 id="pillars-heading" className="font-headline text-5xl font-bold tracking-tight text-on-surface mb-6">
+              Your AI Readiness Report
+              <br />Covers 6 Pillars
+            </h2>
+            <div className="w-24 h-1 bg-primary mx-auto rounded-full" aria-hidden />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {READINESS_PILLARS.map(({ icon, title, desc }) => (
+              <div key={title} className="flex flex-col gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                  <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
+                </div>
+                <h4 className="font-headline text-xl font-bold">{title}</h4>
+                <p className="text-on-surface-variant leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4-Step Roadmap */}
+      <section className="py-32 px-8" aria-labelledby="roadmap-heading">
+        <div className="max-w-7xl mx-auto">
+          <h2 id="roadmap-heading" className="font-headline text-5xl font-bold tracking-tight text-on-surface mb-20 text-center">
+            From Conversation to Roadmap
+            <br />in 2 Weeks
           </h2>
-          <p className="text-on-surface-variant text-lg mb-10">
-            Our 20-point diagnostic tells you exactly where you stand and what
-            moves the needle.
-          </p>
-          <Link
-            href="/contact"
-            className="signature-gradient text-white font-headline font-bold px-10 py-5 rounded-xl text-lg hover:shadow-2xl transition-all inline-block"
-          >
-            Book a Strategy Audit →
-          </Link>
+          <div className="relative">
+            <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant/30 -translate-y-1/2" aria-hidden />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+              {ROADMAP_STEPS.map(({ num, title, desc }) => (
+                <div key={num} className="bg-surface p-6 text-center border border-outline-variant/20 rounded-xl">
+                  <div className="w-16 h-16 rounded-full bg-surface-container-high border-4 border-surface flex items-center justify-center mx-auto mb-6">
+                    <span className="font-headline font-black text-2xl text-primary">{num}</span>
+                  </div>
+                  <h5 className="font-headline text-lg font-bold mb-2">{title}</h5>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Consulting Scope */}
+      <section className="py-32 bg-surface-container-low border-y border-outline-variant/10" aria-labelledby="scope-heading">
+        <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-20">
+          <div>
+            <h2 id="scope-heading" className="font-headline text-5xl font-bold tracking-tight text-on-surface mb-8">
+              Consulting Scope
+            </h2>
+            <p className="text-lg text-on-surface-variant mb-8 leading-relaxed">
+              Our engineers and strategists specialize in high-stakes AI transitions for Fortune 500
+              and high-growth tech firms.
+            </p>
+            <div className="space-y-4">
+              {SCOPE_ITEMS.map(({ icon, label }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-surface-container hover:bg-surface-container-highest transition-colors group"
+                >
+                  <span className="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">
+                    {icon}
+                  </span>
+                  <span className="font-medium">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Readiness grade visual */}
+          <div className="relative rounded-2xl overflow-hidden flex items-center justify-center p-8 bg-surface-container-lowest">
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{ backgroundImage: "radial-gradient(circle at center, #abc7ff 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+              aria-hidden
+            />
+            <div className="relative z-10 w-full aspect-square rounded-full bg-gradient-to-br from-primary/30 via-tertiary/10 to-secondary/30 blur-2xl animate-pulse max-w-[250px] mx-auto" aria-hidden />
+            <div className="relative z-20 text-center absolute">
+              <div className="font-headline font-black text-8xl text-on-surface tracking-tighter mb-4">A+</div>
+              <div className="font-mono text-primary uppercase tracking-[0.3em] text-sm">Readiness Grade</div>
+              <div className="mt-8 p-4 bg-surface/80 backdrop-blur rounded-xl border border-outline-variant/30 font-mono text-xs text-on-surface-variant text-left">
+                $ tail audit --target=enterprise-data<br />
+                [SUCCESS] 99.8% Core Integrity<br />
+                [SUCCESS] Compliance Validated
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final Gradient CTA */}
+      <section className="py-20 px-8">
+        <div className="max-w-5xl mx-auto rounded-[2rem] p-12 md:p-24 relative overflow-hidden flex flex-col items-center text-center">
+          <div className="absolute inset-0 signature-gradient" aria-hidden />
+          <div className="absolute inset-0 bg-surface/20 backdrop-blur-[2px]" aria-hidden />
+          <div className="relative z-10">
+            <h2 className="font-headline text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter">
+              Ready to Engineer Your
+              <br />Future?
+            </h2>
+            <p className="text-white/80 text-lg mb-12 max-w-xl mx-auto font-medium">
+              Don&apos;t launch a pilot that goes nowhere. Get a battle-tested roadmap from the
+              architects of Susea.ai.
+            </p>
+            <div className="flex flex-col md:flex-row gap-6 justify-center">
+              <Link
+                href="/contact"
+                className="bg-white px-10 py-5 rounded-full font-headline font-bold text-xl hover:scale-105 transition-transform text-primary-container"
+              >
+                Schedule Your Audit
+              </Link>
+              <button className="bg-transparent border-2 border-white/30 text-white px-10 py-5 rounded-full font-headline font-bold text-xl hover:bg-white/10 transition-colors">
+                Download Sample Report
+              </button>
+            </div>
+          </div>
         </div>
       </section>
     </>

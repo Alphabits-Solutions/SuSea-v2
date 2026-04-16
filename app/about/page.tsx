@@ -266,20 +266,40 @@ export default function AboutPage() {
               <span>Singapore</span>
             </div>
           </div>
-          <div className="relative w-full aspect-[21/9] bg-surface-container-lowest rounded-xl overflow-hidden p-12 border border-outline-variant/10">
+          <div className="relative w-full aspect-[21/9] bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10">
+            {/* Dot grid overlay */}
             <div
-              className="absolute inset-0 opacity-20"
+              className="absolute inset-0 z-10 opacity-20 pointer-events-none"
               style={{
-                backgroundImage:
-                  "radial-gradient(circle at 2px 2px, #abc7ff 1px, transparent 0)",
+                backgroundImage: "radial-gradient(circle at 2px 2px, #abc7ff 1px, transparent 0)",
                 backgroundSize: "24px 24px",
               }}
               aria-hidden
             />
-            <div className="relative w-full h-full flex items-center justify-center">
-              <div className="absolute top-[35%] left-[20%] w-4 h-4 bg-primary rounded-full animate-pulse shadow-[0_0_15px_#abc7ff]" />
-              <div className="absolute top-[40%] left-[48%] w-4 h-4 bg-primary rounded-full animate-pulse shadow-[0_0_15px_#abc7ff]" />
-              <div className="absolute top-[60%] left-[75%] w-4 h-4 bg-primary rounded-full animate-pulse shadow-[0_0_15px_#abc7ff]" />
+            {/* World map image — fills the full container */}
+            <Image
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcYz4MfqqRWnpb3H8p97OwaKUiIRIR59QVIbnnlARnDeTpudF7DFyIfvQHFDSQSSJRd-_58c7UGGqecgZ1gfgSrq9rYj_8EwfyaK_Llc_WaMdvRxyk7INLCRuqoiC4FL5tW2DO2zvgG-RB1BdfIussHtifMXp2ldGdygo331NFRUT5ZkWM49Zhvpxo3o6jQtQeVllm4q8LPniiAKWVyXcLOh6O3eaQj8ZfAHYpTc9A3red7xj72rljLtuEgtD8qFyr2G2HIS_pBvxC"
+              alt="Abstract world map showing global office locations"
+              fill
+              className="object-cover opacity-30"
+            />
+            {/* Office markers — z-20 so they sit above the image and dot grid */}
+            <div className="absolute inset-0 z-20">
+              {/* San Francisco */}
+              <div className="absolute top-[38%] left-[18%] flex flex-col items-center gap-1">
+                <div className="w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_12px_#abc7ff]" />
+                <span className="text-primary text-[10px] font-mono uppercase tracking-widest hidden md:block">SF</span>
+              </div>
+              {/* London */}
+              <div className="absolute top-[32%] left-[47%] flex flex-col items-center gap-1">
+                <div className="w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_12px_#abc7ff]" style={{ animationDelay: "0.4s" }} />
+                <span className="text-primary text-[10px] font-mono uppercase tracking-widest hidden md:block">LDN</span>
+              </div>
+              {/* Singapore */}
+              <div className="absolute top-[58%] left-[74%] flex flex-col items-center gap-1">
+                <div className="w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_12px_#abc7ff]" style={{ animationDelay: "0.8s" }} />
+                <span className="text-primary text-[10px] font-mono uppercase tracking-widest hidden md:block">SGP</span>
+              </div>
             </div>
           </div>
         </div>

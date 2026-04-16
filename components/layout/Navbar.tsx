@@ -38,11 +38,20 @@ const OTHER_LINKS = [
   { label: "About", href: "/about" },
 ];
 
+const LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "de", label: "Deutsch" },
+];
+
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [activeLang, setActiveLang] = useState("en");
 
   const isServiceActive = () =>
     SERVICES_GROUPS.some((g) => g.items.some((item) => pathname === item.href));
@@ -150,6 +159,45 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
+        </div>
+
+        {/* Language selector */}
+        <div
+          className="relative hidden md:block"
+          onMouseEnter={() => setLangOpen(true)}
+          onMouseLeave={() => setLangOpen(false)}
+        >
+          <button
+            className="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors text-sm font-medium"
+            aria-label="Select language"
+            aria-expanded={langOpen}
+          >
+            <span className="material-symbols-outlined text-base">language</span>
+            <span className="uppercase font-mono text-xs">{activeLang}</span>
+            <span className={clsx("material-symbols-outlined text-xs transition-transform duration-200", langOpen ? "rotate-180" : "")}>
+              expand_more
+            </span>
+          </button>
+          {langOpen && (
+            <div className="absolute top-full right-0 pt-2 w-36">
+              <div className="bg-surface-container-low border border-outline-variant/15 rounded-xl shadow-2xl shadow-black/40 py-2">
+                {LANGUAGES.map(({ code, label }) => (
+                  <button
+                    key={code}
+                    onClick={() => { setActiveLang(code); setLangOpen(false); }}
+                    className={clsx(
+                      "w-full text-left px-4 py-2 text-sm transition-colors",
+                      activeLang === code
+                        ? "text-primary font-semibold"
+                        : "text-on-surface hover:text-primary hover:bg-surface-container"
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* CTA */}
