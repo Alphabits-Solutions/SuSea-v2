@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import FAQSection from "@/components/ui/FAQSection";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Vibe Code Rescue — AI-Generated Code to Production",
@@ -81,16 +81,33 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Vibe Code Rescue",
   url: "https://susea.ai/services/vibe-code-rescue",
-  provider: { "@type": "Organization", name: "Susea.ai" },
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
   description: "Transform AI-prototyped codebases into secure, scalable, production-ready software.",
-  areaServed: ["US", "GB", "EU"],
+  serviceType: "AI Code Remediation",
+  areaServed: ["US", "GB", "EU", "SG"],
 };
+
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Rescue AI-Generated Code for Production",
+  description:
+    "Susea.ai's proven audit process for transforming vibe-coded prototypes into secure, scalable software.",
+  totalTime: "P14D",
+  steps: AUDIT_STEPS.map((s) => ({ name: s.title, text: s.desc })),
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/vibe-code-rescue" },
+  { name: "Vibe Code Rescue", url: "https://susea.ai/services/vibe-code-rescue" },
+]);
 
 export default function VibeCodeRescuePage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative pt-24 md:pt-32 pb-16 md:pb-20 px-4 md:px-8 overflow-hidden">

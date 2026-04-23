@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllPosts, getPostBySlug } from "@/lib/mdx";
 import JsonLd from "@/components/JsonLd";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs } from "@/lib/metadata";
 import ReadingProgress from "@/components/sections/blog/ReadingProgress";
 
 interface Props {
@@ -35,26 +35,56 @@ export default async function BlogPostPage({ params }: Props) {
 
   const ARTICLE_SCHEMA = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
+    articleBody: post.rawContent.slice(0, 500),
+    articleSection: post.category,
+    keywords: ["AI", "artificial intelligence", post.category, "Susea.ai"],
+    inLanguage: "en-US",
     datePublished: post.date,
+    dateModified: post.date,
     url: `https://susea.ai/blog/${slug}`,
+    image: {
+      "@type": "ImageObject",
+      url: "https://susea.ai/og-default.png",
+      width: 1200,
+      height: 630,
+    },
     author: {
       "@type": "Person",
       name: post.author,
       jobTitle: post.authorRole,
+      sameAs: [
+        "https://linkedin.com/company/suseaai",
+        "https://twitter.com/suseaai",
+      ],
     },
     publisher: {
       "@type": "Organization",
       name: "Susea.ai",
       url: "https://susea.ai",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://susea.ai/logo.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://susea.ai/blog/${slug}`,
     },
   };
+
+  const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+    { name: "Home", url: "https://susea.ai" },
+    { name: "Blog", url: "https://susea.ai/blog" },
+    { name: post.title, url: `https://susea.ai/blog/${slug}` },
+  ]);
 
   return (
     <>
       <JsonLd data={ARTICLE_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       <div className="pt-32 pb-20 max-w-[1440px] mx-auto px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">

@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   { url: "/services/security", priority: 0.8, changeFrequency: "monthly" as const },
   { url: "/services/hire", priority: 0.7, changeFrequency: "monthly" as const },
   { url: "/services/maintenance", priority: 0.8, changeFrequency: "monthly" as const },
+  { url: "/automation-calculator", priority: 0.7, changeFrequency: "monthly" as const },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

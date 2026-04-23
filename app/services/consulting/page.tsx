@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import FAQSection from "@/components/ui/FAQSection";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "AI Consulting & Readiness",
@@ -83,16 +83,33 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "AI Consulting & Readiness",
   url: "https://susea.ai/services/consulting",
-  provider: { "@type": "Organization", name: "Susea.ai" },
-  description: "Strategic AI readiness assessments and consulting to identify high-ROI opportunities.",
-  areaServed: ["US", "GB", "EU"],
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
+  description: "Strategic AI readiness assessments and consulting to identify high-ROI AI opportunities and build a 12-month roadmap.",
+  serviceType: "AI Strategy Consulting",
+  areaServed: ["US", "GB", "EU", "SG"],
 };
+
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Conduct an AI Readiness Audit",
+  description:
+    "Susea.ai's 4-phase AI readiness methodology — from discovery intensive through final blueprint delivery.",
+  totalTime: "P10D",
+  steps: ROADMAP_STEPS.map((s) => ({ name: s.title, text: s.desc })),
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/consulting" },
+  { name: "AI Consulting & Readiness", url: "https://susea.ai/services/consulting" },
+]);
 
 export default function ConsultingPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">

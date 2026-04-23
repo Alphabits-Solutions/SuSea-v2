@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import FAQSection from "@/components/ui/FAQSection";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Custom AI Agents — Built for Your Business",
@@ -245,10 +245,25 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Custom AI Agents",
   url: "https://susea.ai/services/agents",
-  provider: { "@type": "Organization", name: "Susea.ai" },
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
   description:
     "Custom-built AI agents for calling, support, sales, HR, admin, and marketing — integrated with your tools and live in 7 days.",
-  areaServed: ["US", "GB", "EU"],
+  serviceType: "AI Agent Development",
+  areaServed: ["US", "GB", "EU", "SG"],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "AI Agent Packages",
+    itemListElement: TIERS.map((tier) => ({
+      "@type": "Offer",
+      name: tier.name,
+      description: tier.subtitle,
+      itemOffered: {
+        "@type": "Service",
+        name: tier.name,
+        description: tier.features.join(". "),
+      },
+    })),
+  },
 };
 
 const FAQ_SCHEMA = {
@@ -261,11 +276,27 @@ const FAQ_SCHEMA = {
   })),
 };
 
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Deploy a Custom AI Agent",
+  description:
+    "Susea.ai's proven 5-step process for building and deploying custom AI agents — from discovery through production.",
+  totalTime: "P7D",
+  steps: HOW_IT_WORKS.map((s) => ({ name: s.title, text: s.desc })),
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/agents" },
+  { name: "Custom AI Agents", url: "https://susea.ai/services/agents" },
+]);
+
 export default function AgentsPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden px-4 md:px-8">

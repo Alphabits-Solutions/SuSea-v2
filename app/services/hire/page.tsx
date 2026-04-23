@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import FAQSection from "@/components/ui/FAQSection";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Hire Dedicated Resources — Top Tech Talent",
@@ -69,16 +69,32 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Hire Dedicated Resources",
   url: "https://susea.ai/services/hire",
-  provider: { "@type": "Organization", name: "Susea.ai" },
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
   description: "Access pre-vetted senior engineers ready to integrate within 72 hours.",
-  areaServed: ["US", "GB", "EU"],
+  serviceType: "Tech Talent Staffing",
+  areaServed: ["US", "GB", "EU", "SG"],
 };
+
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Hire a Dedicated AI Engineer",
+  description: "Susea.ai's 4-step process to onboard a pre-vetted senior engineer within 72 hours.",
+  totalTime: "P3D",
+  steps: HOW_IT_WORKS.map((s) => ({ name: s.title, text: s.desc })),
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/hire" },
+  { name: "Hire Dedicated Resources", url: "https://susea.ai/services/hire" },
+]);
 
 export default function HirePage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-screen flex items-center pt-24 overflow-hidden">

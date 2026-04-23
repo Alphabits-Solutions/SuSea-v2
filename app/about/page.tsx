@@ -68,13 +68,39 @@ const ABOUT_PAGE_SCHEMA = {
   url: "https://susea.ai/about",
   description:
     "Built by builders for builders. Learn about Susea.ai's story, mission, values, and team.",
+  inLanguage: "en-US",
   mainEntity: ORGANIZATION_SCHEMA,
+};
+
+const TEAM_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Susea.ai Leadership Team",
+  description: "The founding and leadership team at Susea.ai enterprise AI agency.",
+  itemListElement: TEAM.map(({ name, role, bio, src }, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Person",
+      name,
+      jobTitle: role,
+      description: bio,
+      image: src,
+      worksFor: {
+        "@type": "Organization",
+        name: "Susea.ai",
+        url: "https://susea.ai",
+      },
+      sameAs: ["https://linkedin.com/company/suseaai"],
+    },
+  })),
 };
 
 export default function AboutPage() {
   return (
     <>
       <JsonLd data={ABOUT_PAGE_SCHEMA} />
+      <JsonLd data={TEAM_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-[819px] flex items-center justify-center px-8 overflow-hidden pt-24">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import FAQSection from "@/components/ui/FAQSection";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "AI Security — Enterprise-Grade Compliance",
@@ -77,16 +77,32 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "AI Security & Compliance",
   url: "https://susea.ai/services/security",
-  provider: { "@type": "Organization", name: "Susea.ai" },
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
   description: "Enterprise-grade security, compliance, and AI guardrails for modern organizations.",
-  areaServed: ["US", "GB", "EU"],
+  serviceType: "Cybersecurity & AI Compliance",
+  areaServed: ["US", "GB", "EU", "SG"],
 };
+
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Harden AI Systems for Enterprise Security",
+  description: "Susea.ai's 3-phase security process — audit, remediation, and compliance certification.",
+  totalTime: "P14D",
+  steps: PROCESS.map((s) => ({ name: s.title, text: s.desc })),
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/security" },
+  { name: "AI Security", url: "https://susea.ai/services/security" },
+]);
 
 export default function SecurityPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden px-4 md:px-6 pt-20">

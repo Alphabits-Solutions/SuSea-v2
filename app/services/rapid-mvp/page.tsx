@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import JsonLd from "@/components/JsonLd";
 import FAQSection from "@/components/ui/FAQSection";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Rapid MVP — From Idea to Market in 4 Weeks",
@@ -76,16 +76,32 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Rapid MVP Development",
   url: "https://susea.ai/services/rapid-mvp",
-  provider: { "@type": "Organization", name: "Susea.ai" },
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
   description: "Web, Mobile, and SaaS MVPs shipped in 4 weeks. Full ownership, production-ready.",
-  areaServed: ["US", "GB", "EU"],
+  serviceType: "MVP Development",
+  areaServed: ["US", "GB", "EU", "SG"],
 };
+
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Launch an MVP in 4 Weeks",
+  description: "Susea.ai's 4-sprint process for building and launching a production-ready MVP.",
+  totalTime: "P4W",
+  steps: TIMELINE.map((s) => ({ name: s.title, text: s.desc })),
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/rapid-mvp" },
+  { name: "Rapid MVP", url: "https://susea.ai/services/rapid-mvp" },
+]);
 
 export default function RapidMVPPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-[921px] flex flex-col items-center justify-center px-6 overflow-hidden pt-24">

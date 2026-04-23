@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import JsonLd from "@/components/JsonLd";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Fix AI Agents — Precision Engineered Repair",
@@ -54,9 +54,10 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Fix AI Agents",
   url: "https://susea.ai/services/fix-agent",
-  provider: { "@type": "Organization", name: "Susea.ai" },
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
   description: "Diagnose and rehabilitate failing AI agents, prompt chains, and LLM integrations.",
-  areaServed: ["US", "GB", "EU"],
+  serviceType: "AI Agent Repair & Optimization",
+  areaServed: ["US", "GB", "EU", "SG"],
 };
 
 const FAQ_SCHEMA = {
@@ -69,11 +70,26 @@ const FAQ_SCHEMA = {
   })),
 };
 
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Diagnose and Fix a Broken AI Agent",
+  description: "Susea.ai's 5-step diagnostic process for rehabilitating failing AI agent infrastructure.",
+  totalTime: "P3D",
+  steps: DIAGNOSTIC_STEPS.map((s) => ({ name: s.title, text: s.desc })),
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/fix-agent" },
+  { name: "Fix AI Agents", url: "https://susea.ai/services/fix-agent" },
+]);
+
 export default function FixAgentPage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-[819px] flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20">

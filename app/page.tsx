@@ -22,6 +22,21 @@ export const metadata: Metadata = {
       "We fix broken AI agents, build new ones, ship software, and consult teams. AI agency in USA & Europe.",
     url: "https://susea.ai",
     type: "website",
+    images: [
+      {
+        url: "https://susea.ai/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Susea.ai — Enterprise AI Agency",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Susea.ai — The Digital Architect for Enterprise AI",
+    description: "We fix broken AI agents, build new ones, ship software, and consult teams. AI agency in USA & Europe.",
+    site: "@suseaai",
+    images: ["https://susea.ai/og-default.png"],
   },
 };
 

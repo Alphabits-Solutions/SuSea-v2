@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import WizardContainer from "@/components/calculator/WizardContainer";
+import { buildMetadata, buildBreadcrumbs } from "@/lib/metadata";
+
+export const metadata: Metadata = buildMetadata({
+  title: "AI Automation Savings Calculator — Free ROI Estimator",
+  description:
+    "Calculate your business's potential AI automation savings across 200+ workflows. Get a free personalized implementation roadmap with realistic ROI projections.",
+  path: "/automation-calculator",
+});
 
 const TOOL_SCHEMA = {
   "@context": "https://schema.org",
@@ -103,11 +112,17 @@ const FAQS = [
   },
 ];
 
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Automation Calculator", url: "https://susea.ai/automation-calculator" },
+]);
+
 export default function AutomationCalculatorPage() {
   return (
     <>
       <JsonLd data={TOOL_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       <div className="pt-24 pb-20 px-4 sm:px-8 max-w-4xl mx-auto">
         {/* Hero */}

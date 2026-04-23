@@ -3,7 +3,7 @@ import Link from "next/link";
 import ContactForm from "@/components/sections/contact/ContactForm";
 import FAQAccordion from "@/components/sections/contact/FAQAccordion";
 import JsonLd from "@/components/JsonLd";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
@@ -57,11 +57,17 @@ const FAQ_SCHEMA = {
   ],
 };
 
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Contact", url: "https://susea.ai/contact" },
+]);
+
 export default function ContactPage() {
   return (
     <>
       <JsonLd data={CONTACT_PAGE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
         {/* Two-column layout */}

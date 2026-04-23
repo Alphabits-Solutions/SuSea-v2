@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import FAQSection from "@/components/ui/FAQSection";
-import { buildMetadata } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Managed Maintenance — Year-Round Coverage",
@@ -151,17 +151,38 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Managed Maintenance",
   url: "https://susea.ai/services/maintenance",
-  provider: { "@type": "Organization", name: "Susea.ai" },
+  provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
   description:
     "Year-round managed maintenance covering security patching, performance monitoring, cloud tuning, and architectural reviews.",
-  areaServed: ["US", "GB", "EU"],
+  serviceType: "Managed IT & Software Maintenance",
+  areaServed: ["US", "GB", "EU", "SG"],
 };
+
+const HOWTO_SCHEMA = buildHowToSchema({
+  name: "How to Set Up Managed Maintenance for Your Application",
+  description:
+    "Susea.ai's ongoing maintenance cycle covering the four pillars of production software health.",
+  steps: [
+    { name: "Dependency Updates", text: "Ensure all npm, pip, and system packages are current and free from known CVEs." },
+    { name: "Log Analysis", text: "Review application and infrastructure logs for anomalies, errors, and unusual traffic patterns." },
+    { name: "Resource Optimization", text: "Tune server resources, query performance, and cloud costs to eliminate inefficiencies." },
+    { name: "Security Hardening", text: "Apply security patches, tighten IAM policies, and update firewall rules proactively." },
+  ],
+});
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "Services", url: "https://susea.ai/services/maintenance" },
+  { name: "Managed Maintenance", url: "https://susea.ai/services/maintenance" },
+]);
 
 export default function MaintenancePage() {
   return (
     <>
       <JsonLd data={SERVICE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
+      <JsonLd data={HOWTO_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-[819px] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-20">

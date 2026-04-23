@@ -40,7 +40,19 @@ export const metadata: Metadata = {
     "LLM development",
     "AI consulting",
     "AI automation",
+    "custom AI agents",
+    "agentic workflows",
+    "RAG pipelines",
+    "AI strategy",
+    "GPT-4 agents",
+    "Claude agents",
+    "AI for business",
   ],
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon-32x32.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -49,11 +61,20 @@ export const metadata: Metadata = {
     title: "Susea.ai — The Digital Architect for Enterprise AI",
     description:
       "We fix broken AI agents, build new ones, ship software, and consult teams — so your business runs better, faster, and smarter.",
+    images: [
+      {
+        url: "https://susea.ai/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Susea.ai — Enterprise AI Agency",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     site: "@suseaai",
     creator: "@suseaai",
+    images: ["https://susea.ai/og-default.png"],
   },
   robots: {
     index: true,
