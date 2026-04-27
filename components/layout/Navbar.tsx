@@ -80,11 +80,11 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="https://lh3.googleusercontent.com/aida/ADBb0ug0OFxIZ_kjpOZBQ1oZIRZsL_Bb5yKPAtQitY6-RG6SJbJJ2G6sMLY6oLBmnvbwbkmktyFzX4c88vNmOFEWJDk7lYg33Z-y-FRFtnVQnCc6bSv8FpIs3ffbi8wHTMSVHynI8C4xU6cVQH-H52gU9Nn-mJDGNZCpmlIf5RfnjK8WnQrW_bPsRd4QGuCY4dCgf7oPBhsCFylVCXpc-WXGdWuFZUOFhEyfCEqV9fe5MN5lwo_x4i_20DLzUQ86ZLeYf0lPa3zhkEmtjQo"
+            src="/logo.svg"
             alt="Susea.ai"
-            width={120}
-            height={32}
-            className="h-8 w-auto"
+            width={140}
+            height={36}
+            className="h-9 w-auto"
             priority
           />
         </Link>

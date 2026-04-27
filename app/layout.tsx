@@ -49,9 +49,8 @@ export const metadata: Metadata = {
     "AI for business",
   ],
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-    shortcut: "/favicon-32x32.png",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
   },
   openGraph: {
     type: "website",
