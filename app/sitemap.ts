@@ -17,7 +17,10 @@ const STATIC_ROUTES = [
   { url: "/services/security", priority: 0.8, changeFrequency: "monthly" as const },
   { url: "/services/hire", priority: 0.7, changeFrequency: "monthly" as const },
   { url: "/services/maintenance", priority: 0.8, changeFrequency: "monthly" as const },
-  { url: "/automation-calculator", priority: 0.7, changeFrequency: "monthly" as const },
+  { url: "/resources/free-tools", priority: 0.7, changeFrequency: "weekly" as const },
+  { url: "/resources/playbooks", priority: 0.7, changeFrequency: "weekly" as const },
+  { url: "/terms-of-service", priority: 0.4, changeFrequency: "yearly" as const },
+  { url: "/privacy-policy", priority: 0.4, changeFrequency: "yearly" as const },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

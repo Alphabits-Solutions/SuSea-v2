@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 type IndustryKey = "healthcare" | "finance" | "retail" | "manufacturing" | "education" | "trades";
@@ -57,6 +58,15 @@ const INDUSTRIES: Record<IndustryKey, Industry> = {
   },
 };
 
+const GRADIENTS: Record<IndustryKey, string> = {
+  healthcare: "bg-gradient-to-br from-teal-500/30 to-green-400/20",
+  finance: "bg-gradient-to-br from-blue-600/30 to-indigo-400/20",
+  retail: "bg-gradient-to-br from-orange-500/30 to-red-400/20",
+  manufacturing: "bg-gradient-to-br from-slate-600/30 to-gray-400/20",
+  education: "bg-gradient-to-br from-purple-600/30 to-violet-400/20",
+  trades: "bg-gradient-to-br from-amber-500/30 to-yellow-400/20",
+};
+
 const TABS = Object.keys(INDUSTRIES) as IndustryKey[];
 
 export default function IndustriesSection() {
@@ -108,16 +118,16 @@ export default function IndustriesSection() {
             <p className="text-inverse-on-surface/70 text-lg mb-8 leading-relaxed">
               {industry.desc}
             </p>
-            <button className="text-secondary-container font-headline font-bold flex items-center gap-2 hover:gap-4 transition-all">
+            <Link href="/case-studies" className="text-secondary-container font-headline font-bold flex items-center gap-2 hover:gap-4 transition-all">
               {industry.cta}{" "}
               <span className="material-symbols-outlined">arrow_forward</span>
-            </button>
+            </Link>
           </div>
 
           <div className="hidden lg:block">
-            <div className="aspect-square signature-gradient rounded-xl opacity-20 relative flex items-center justify-center overflow-hidden">
+            <div className={`aspect-square ${GRADIENTS[active]} rounded-xl relative flex items-center justify-center overflow-hidden transition-all duration-500`}>
               <span
-                className="material-symbols-outlined text-[200px] text-primary"
+                className="material-symbols-outlined text-[200px] text-primary/60"
                 style={{ fontVariationSettings: "'FILL' 1" }}
               >
                 {industry.visualIcon}

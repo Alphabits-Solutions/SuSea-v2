@@ -32,9 +32,15 @@ const SERVICES_GROUPS = [
   },
 ];
 
-const OTHER_LINKS = [
-  { label: "Case Studies", href: "/case-studies" },
-  { label: "About", href: "/about" },
+const RESOURCES_GROUPS = [
+  {
+    group: "Free Resources",
+    items: [{ label: "Free AI Tools", href: "/resources/free-tools" }],
+  },
+  {
+    group: "Playbooks",
+    items: [{ label: "AI Playbooks", href: "/resources/playbooks" }],
+  },
 ];
 
 const LANGUAGES = [
@@ -49,11 +55,16 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [activeLang, setActiveLang] = useState("en");
 
   const isServiceActive = () =>
     SERVICES_GROUPS.some((g) => g.items.some((item) => pathname === item.href));
+
+  const isResourceActive = () =>
+    RESOURCES_GROUPS.some((g) => g.items.some((item) => pathname === item.href));
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return false;
@@ -143,21 +154,93 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Other nav links */}
-          {OTHER_LINKS.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
+          {/* Case Studies */}
+          <Link
+            href="/case-studies"
+            className={clsx(
+              "transition-colors duration-300",
+              isActive("/case-studies")
+                ? "text-primary font-semibold border-b-2 border-primary pb-1"
+                : "text-on-surface hover:text-primary"
+            )}
+          >
+            Case Studies
+          </Link>
+
+          {/* Resources dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => setResourcesOpen(true)}
+            onMouseLeave={() => setResourcesOpen(false)}
+          >
+            <button
               className={clsx(
-                "transition-colors duration-300",
-                isActive(href)
+                "flex items-center gap-1 transition-colors duration-300",
+                isResourceActive()
                   ? "text-primary font-semibold border-b-2 border-primary pb-1"
                   : "text-on-surface hover:text-primary"
               )}
+              aria-expanded={resourcesOpen}
+              aria-haspopup="true"
             >
-              {label}
-            </Link>
-          ))}
+              Resources
+              <span
+                className={clsx(
+                  "material-symbols-outlined text-base transition-transform duration-200",
+                  resourcesOpen ? "rotate-180" : ""
+                )}
+              >
+                expand_more
+              </span>
+            </button>
+
+            {resourcesOpen && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[320px]">
+                <div className="bg-surface-container-low border border-outline-variant/15 rounded-2xl shadow-2xl shadow-black/40 p-6">
+                  <div className="grid grid-cols-2 gap-6">
+                    {RESOURCES_GROUPS.map(({ group, items }) => (
+                      <div key={group}>
+                        <p className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3 px-2">
+                          {group}
+                        </p>
+                        <ul className="space-y-1">
+                          {items.map(({ label, href }) => (
+                            <li key={href}>
+                              <Link
+                                href={href}
+                                onClick={() => setResourcesOpen(false)}
+                                className={clsx(
+                                  "block px-2 py-2 rounded-lg text-sm font-medium transition-colors duration-150",
+                                  pathname === href
+                                    ? "text-primary bg-primary/10"
+                                    : "text-on-surface hover:text-primary hover:bg-surface-container"
+                                )}
+                              >
+                                {label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* About */}
+          <Link
+            href="/about"
+            className={clsx(
+              "transition-colors duration-300",
+              isActive("/about")
+                ? "text-primary font-semibold border-b-2 border-primary pb-1"
+                : "text-on-surface hover:text-primary"
+            )}
+          >
+            About
+          </Link>
         </div>
 
         {/* Language selector */}
@@ -269,20 +352,74 @@ export default function Navbar() {
             </div>
           )}
 
-          {/* Other links */}
-          {OTHER_LINKS.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              onClick={() => setMenuOpen(false)}
+          {/* Resources accordion */}
+          <button
+            onClick={() => setMobileResourcesOpen((prev) => !prev)}
+            className={clsx(
+              "flex items-center justify-between font-headline text-base font-medium w-full",
+              isResourceActive() ? "text-primary" : "text-on-surface"
+            )}
+          >
+            Resources
+            <span
               className={clsx(
-                "font-headline text-base font-medium",
-                isActive(href) ? "text-primary" : "text-on-surface"
+                "material-symbols-outlined text-base transition-transform duration-200",
+                mobileResourcesOpen ? "rotate-180" : ""
               )}
             >
-              {label}
-            </Link>
-          ))}
+              expand_more
+            </span>
+          </button>
+
+          {mobileResourcesOpen && (
+            <div className="pl-4 flex flex-col gap-5">
+              {RESOURCES_GROUPS.map(({ group, items }) => (
+                <div key={group}>
+                  <p className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-2">
+                    {group}
+                  </p>
+                  <ul className="space-y-1">
+                    {items.map(({ label, href }) => (
+                      <li key={href}>
+                        <Link
+                          href={href}
+                          onClick={() => setMenuOpen(false)}
+                          className={clsx(
+                            "block py-1.5 text-sm font-medium",
+                            pathname === href ? "text-primary" : "text-on-surface-variant"
+                          )}
+                        >
+                          {label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Case Studies & About */}
+          <Link
+            href="/case-studies"
+            onClick={() => setMenuOpen(false)}
+            className={clsx(
+              "font-headline text-base font-medium",
+              isActive("/case-studies") ? "text-primary" : "text-on-surface"
+            )}
+          >
+            Case Studies
+          </Link>
+          <Link
+            href="/about"
+            onClick={() => setMenuOpen(false)}
+            className={clsx(
+              "font-headline text-base font-medium",
+              isActive("/about") ? "text-primary" : "text-on-surface"
+            )}
+          >
+            About
+          </Link>
 
           <Link
             href="/contact"

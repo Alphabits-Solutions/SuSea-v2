@@ -1,6 +1,16 @@
+import Image from "next/image";
+
 const COMPANIES = [
-  "TechCorp", "NovaMed", "FinAxis", "RetailEdge", "CloudForce",
-  "DataBridge", "ScaleAI", "OptiFlow", "NexGen", "BuildFast",
+  { name: "Balaji Flexipack", src: "/images/logos/balaji-flexipack.webp" },
+  { name: "Ignite",           src: "/images/logos/ignite.jpeg" },
+  { name: "OverWorld",        src: "/images/logos/overworld.png" },
+  { name: "BrainMate",        src: "/images/logos/brainmate.png" },
+  { name: "InstantMenu",      src: "/images/logos/instantmenu.png" },
+  { name: "V 1979",           src: "/images/logos/v1979.png" },
+  { name: "SourceMate",       src: "/images/logos/sourcemate.png" },
+  { name: "Sole Cookware",    src: "/images/logos/sole-cookware.webp" },
+  { name: "Valiant Products", src: "/images/logos/valiant-products.png" },
+  { name: "eliora",           src: "/images/logos/eliora.webp" },
 ];
 
 const INDUSTRIES = [
@@ -26,12 +36,19 @@ export default function TrustBar() {
       <div className="overflow-hidden mb-6">
         <div className="flex gap-8 items-center whitespace-nowrap">
           <div className="flex gap-8 items-center animate-marquee">
-            {[...COMPANIES, ...COMPANIES].map((name, i) => (
+            {[...COMPANIES, ...COMPANIES].map(({ name, src }, i) => (
               <div
                 key={i}
-                className="shrink-0 px-6 py-3 bg-white/60 rounded-xl border border-outline-variant/10 font-headline font-bold text-inverse-on-surface/50 text-sm tracking-tight"
+                className="shrink-0 px-6 py-3 bg-white rounded-xl border border-outline-variant/10 flex items-center justify-center"
+                style={{ minWidth: "160px", height: "64px" }}
               >
-                {name}
+                <Image
+                  src={src}
+                  alt={name}
+                  width={120}
+                  height={40}
+                  className="h-8 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                />
               </div>
             ))}
           </div>

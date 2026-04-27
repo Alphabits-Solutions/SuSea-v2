@@ -13,18 +13,24 @@ const TESTIMONIALS = [
   {
     quote:
       "Susea.ai delivered an AI agent for our supply chain tracking in half the time we expected. It's now handling 80% of routine inquiries.",
+    name: "James H.",
+    initials: "JH",
     role: "Chief Operating Officer",
     company: "Global Manufacturing Corp",
   },
   {
     quote:
       "Their technical expertise is unmatched. They fixed a legacy integration issue that three other agencies couldn't touch in just 48 hours.",
+    name: "Sarah K.",
+    initials: "SK",
     role: "Technical Director",
     company: "Retail Solutions Inc",
   },
   {
     quote:
       "Most AI agencies talk in buzzwords. Susea talks in ROI. They built us a custom document analysis tool that saves our legal team 20 hours a week.",
+    name: "David M.",
+    initials: "DM",
     role: "Managing Partner",
     company: "Regional Finance Group",
   },
@@ -36,7 +42,7 @@ export default function StatsTestimonials() {
   const prev = () => setActive((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
   const next = () => setActive((i) => (i + 1) % TESTIMONIALS.length);
 
-  const { quote, role, company } = TESTIMONIALS[active];
+  const { quote, name, initials, role, company } = TESTIMONIALS[active];
 
   return (
     <section className="bg-[#F7F7F5] py-32" aria-label="Stats and testimonials">
@@ -62,11 +68,14 @@ export default function StatsTestimonials() {
               &ldquo;{quote}&rdquo;
             </blockquote>
             <figcaption className="flex flex-col items-center gap-1">
-              <div className="w-12 h-12 rounded-full signature-gradient mb-3" aria-hidden />
+              <div className="w-12 h-12 rounded-full signature-gradient mb-3 flex items-center justify-center" aria-hidden>
+                <span className="text-white font-headline font-bold text-sm">{initials}</span>
+              </div>
               <cite className="not-italic font-headline font-bold text-inverse-on-surface block">
-                {role}
+                {name}
               </cite>
-              <span className="text-sm text-inverse-on-surface/60">{company}</span>
+              <span className="text-sm text-inverse-on-surface/70">{role}</span>
+              <span className="text-xs text-inverse-on-surface/50">{company}</span>
             </figcaption>
           </figure>
 

@@ -17,14 +17,44 @@ const COMPANY = [
 ];
 
 const LEGAL = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" },
   { label: "Security", href: "/services/security" },
+];
+
+const TRUST_LOGOS = [
+  { name: "Balaji Flexipack",  src: "/images/logos/balaji-flexipack.webp" },
+  { name: "Sole Cookware",     src: "/images/logos/sole-cookware.webp" },
+  { name: "Valiant Products",  src: "/images/logos/valiant-products.png" },
+  { name: "eliora",            src: "/images/logos/eliora.webp" },
+  { name: "SourceMate",        src: "/images/logos/sourcemate.png" },
+  { name: "BrainMate",         src: "/images/logos/brainmate.png" },
 ];
 
 export default function Footer() {
   return (
     <footer className="bg-[#1b1b1d] w-full rounded-t-[0.75rem]">
+      {/* Client trust strip — appears on every page via footer */}
+      <div className="max-w-7xl mx-auto px-12 pt-12 pb-8 border-b border-outline-variant/10">
+        <p className="text-[#e4e2e4]/30 text-[10px] uppercase tracking-widest font-headline font-bold mb-5">
+          Trusted by
+        </p>
+        <div className="flex flex-wrap gap-8 items-center">
+          {TRUST_LOGOS.map(({ name, src }) => (
+            <div key={name} className="opacity-40 hover:opacity-80 transition-opacity">
+              <Image
+                src={src}
+                alt={name}
+                width={100}
+                height={28}
+                className="h-7 w-auto object-contain"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-12 px-12 py-20 max-w-7xl mx-auto">
         {/* Brand */}
         <div className="col-span-2 md:col-span-1">

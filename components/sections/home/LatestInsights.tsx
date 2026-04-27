@@ -1,6 +1,20 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/mdx";
 
+const CATEGORY_STYLES: Record<string, { bg: string; icon: string }> = {
+  engineering: { bg: "bg-gradient-to-br from-blue-600/20 to-cyan-500/10", icon: "code" },
+  strategy: { bg: "bg-gradient-to-br from-violet-600/20 to-purple-500/10", icon: "bar_chart" },
+  operations: { bg: "bg-gradient-to-br from-teal-600/20 to-emerald-500/10", icon: "settings" },
+  deployment: { bg: "bg-gradient-to-br from-orange-600/20 to-amber-500/10", icon: "rocket_launch" },
+  ethics: { bg: "bg-gradient-to-br from-rose-600/20 to-pink-500/10", icon: "balance" },
+  security: { bg: "bg-gradient-to-br from-red-600/20 to-rose-500/10", icon: "security" },
+};
+const DEFAULT_STYLE = { bg: "bg-gradient-to-br from-primary/10 to-secondary-container/5", icon: "psychology" };
+
+function getCategoryStyle(category: string) {
+  return CATEGORY_STYLES[category?.toLowerCase()] ?? DEFAULT_STYLE;
+}
+
 export default async function LatestInsights() {
   const posts = await getAllPosts();
   const latest = posts.slice(0, 3);
@@ -36,9 +50,10 @@ export default async function LatestInsights() {
               className="group cursor-pointer"
             >
               <div className="aspect-[16/10] bg-white rounded-xl mb-6 overflow-hidden border border-outline-variant/10">
-                <div className="w-full h-full signature-gradient opacity-10 group-hover:opacity-30 transition-opacity flex items-center justify-center">
-                  <span className="material-symbols-outlined text-6xl text-primary">
-                    psychology
+                <div className={`w-full h-full ${getCategoryStyle(post.category).bg} group-hover:opacity-80 transition-opacity flex items-center justify-center`}>
+                  <span className="material-symbols-outlined text-6xl text-on-surface/20"
+                    style={{ fontVariationSettings: "'FILL' 1" }}>
+                    {getCategoryStyle(post.category).icon}
                   </span>
                 </div>
               </div>

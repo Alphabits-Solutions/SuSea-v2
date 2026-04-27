@@ -148,24 +148,43 @@ export default function ContactPage() {
 
           {/* Right: form + calendly */}
           <div className="space-y-12">
-            {/* Calendly placeholder */}
-            <div className="bg-on-surface rounded-xl p-8 shadow-2xl shadow-primary/5 min-h-[400px] flex flex-col items-center justify-center text-center space-y-6">
-              <div className="w-20 h-20 rounded-full bg-surface-container-low flex items-center justify-center">
-                <span className="material-symbols-outlined text-surface text-4xl">calendar_today</span>
-              </div>
-              <div>
-                <h2 className="text-surface font-headline font-bold text-2xl">
-                  Book a Strategy Session
-                </h2>
-                <p className="text-surface-variant mt-2">
-                  Select a time that works for your team.
+            {/*
+              TODO: Replace placeholder below with your Calendly inline widget.
+              Install: npm install react-calendly
+              Usage:   import { InlineWidget } from 'react-calendly';
+                       <InlineWidget url="https://calendly.com/YOUR_USERNAME/30min" styles={{ height: '660px' }} />
+            */}
+            <div className="bg-on-surface rounded-xl p-8 shadow-2xl shadow-primary/5">
+              <div className="flex flex-col items-center justify-center text-center space-y-6 min-h-[420px]">
+                <div className="w-20 h-20 rounded-full bg-surface-container-low flex items-center justify-center">
+                  <span className="material-symbols-outlined text-surface text-4xl">calendar_today</span>
+                </div>
+                <div>
+                  <h2 className="text-surface font-headline font-bold text-2xl">
+                    Book a Strategy Session
+                  </h2>
+                  <p className="text-surface-variant mt-2 max-w-xs mx-auto">
+                    Schedule a free 30-minute call to discuss your AI goals and how we can help.
+                  </p>
+                </div>
+
+                <div className="w-full bg-surface-container-low/10 h-48 rounded-xl border-2 border-dashed border-surface-variant/20 flex flex-col items-center justify-center gap-3">
+                  <span className="material-symbols-outlined text-surface-variant text-3xl">event</span>
+                  <span className="text-surface-variant font-mono text-xs uppercase tracking-widest">
+                    Calendar coming soon
+                  </span>
+                </div>
+
+                <a
+                  href="mailto:hello@susea.ai?subject=Strategy Session Request"
+                  className="inline-flex items-center gap-2 bg-secondary-container text-on-secondary px-8 py-3 rounded-xl font-headline font-bold hover:opacity-90 transition-opacity"
+                >
+                  <span className="material-symbols-outlined text-base">mail</span>
+                  Book via Email
+                </a>
+                <p className="text-surface-variant/60 text-xs">
+                  Or reach us directly at hello@susea.ai
                 </p>
-              </div>
-              {/* Replace this div with your Calendly embed */}
-              <div className="w-full bg-surface-container-low/10 h-64 rounded-xl border-2 border-dashed border-surface-variant/20 flex items-center justify-center">
-                <span className="text-surface-variant font-mono text-sm uppercase">
-                  Calendly Widget Embed
-                </span>
               </div>
             </div>
 

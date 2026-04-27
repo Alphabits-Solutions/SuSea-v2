@@ -4,6 +4,20 @@ import { getAllPosts } from "@/lib/mdx";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/metadata";
 
+const CATEGORY_STYLES: Record<string, { bg: string; icon: string }> = {
+  engineering: { bg: "bg-gradient-to-br from-blue-600/20 to-cyan-500/10", icon: "code" },
+  strategy: { bg: "bg-gradient-to-br from-violet-600/20 to-purple-500/10", icon: "bar_chart" },
+  operations: { bg: "bg-gradient-to-br from-teal-600/20 to-emerald-500/10", icon: "settings" },
+  deployment: { bg: "bg-gradient-to-br from-orange-600/20 to-amber-500/10", icon: "rocket_launch" },
+  ethics: { bg: "bg-gradient-to-br from-rose-600/20 to-pink-500/10", icon: "balance" },
+  security: { bg: "bg-gradient-to-br from-red-600/20 to-rose-500/10", icon: "security" },
+};
+const DEFAULT_STYLE = { bg: "bg-gradient-to-br from-primary/10 to-secondary-container/5", icon: "psychology" };
+
+function getCategoryStyle(category: string) {
+  return CATEGORY_STYLES[category?.toLowerCase()] ?? DEFAULT_STYLE;
+}
+
 export const metadata: Metadata = buildMetadata({
   title: "Blog — Practical AI. No Hype.",
   description:
@@ -122,30 +136,41 @@ export default async function BlogPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group"
+                className="group overflow-hidden rounded-xl"
               >
-                <article className="p-6 bg-surface-container rounded-xl border border-outline-variant/10 group-hover:border-primary/20 transition-colors h-full flex flex-col">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded-full">
-                      {post.category}
-                    </span>
-                    <span className="text-xs text-on-surface-variant/60 font-mono">
-                      {post.readTime}
+                <article className="bg-surface-container border border-outline-variant/10 group-hover:border-primary/20 transition-colors h-full flex flex-col">
+                  {/* Thumbnail */}
+                  <div className={`aspect-[16/9] ${getCategoryStyle(post.category).bg} flex items-center justify-center flex-shrink-0`}>
+                    <span
+                      className="material-symbols-outlined text-5xl text-on-surface/20"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      {getCategoryStyle(post.category).icon}
                     </span>
                   </div>
-                  <h3 className="text-xl font-headline font-bold mb-3 group-hover:text-primary transition-colors leading-snug">
-                    {post.title}
-                  </h3>
-                  <p className="text-on-surface-variant text-sm line-clamp-3 mb-4 flex-1">
-                    {post.excerpt}
-                  </p>
-                  <span className="text-sm font-label text-on-surface-variant/60 font-mono mt-auto">
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </span>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded-full">
+                        {post.category}
+                      </span>
+                      <span className="text-xs text-on-surface-variant/60 font-mono">
+                        {post.readTime}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-headline font-bold mb-3 group-hover:text-primary transition-colors leading-snug">
+                      {post.title}
+                    </h3>
+                    <p className="text-on-surface-variant text-sm line-clamp-3 mb-4 flex-1">
+                      {post.excerpt}
+                    </p>
+                    <span className="text-sm font-label text-on-surface-variant/60 font-mono mt-auto">
+                      {new Date(post.date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
                 </article>
               </Link>
             ))}
