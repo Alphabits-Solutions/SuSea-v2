@@ -60,7 +60,7 @@ export default function Footer() {
         <div className="col-span-2 md:col-span-1">
           <Link href="/" className="inline-block mb-6">
             <Image
-              src="/logo.svg"
+              src="/images/horizontal.png"
               alt="Susea.ai"
               width={140}
               height={36}

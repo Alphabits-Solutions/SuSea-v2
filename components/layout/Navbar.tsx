@@ -80,7 +80,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo.svg"
+            src="/images/horizontal.png"
             alt="Susea.ai"
             width={140}
             height={36}
