@@ -294,7 +294,11 @@ export default function DiagnosticTool() {
       return;
     }
     setEmailError(false);
-    // TODO: POST to CRM — fetch('/api/capture-lead', { method:'POST', body: JSON.stringify({ email: emailInput, score: calcScore() }) });
+    fetch("/api/capture-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: emailInput.trim(), score: calcScore(), source: "AI_Agent_Diagnostic" }),
+    }).catch(console.error);
     setScreen("results");
   }
 

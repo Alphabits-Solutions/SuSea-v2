@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 
 const BASE_URL = "https://susea.ai";
-const DEFAULT_OG_IMAGE = `${BASE_URL}/og-default.png`;
+
+/** Builds a URL for the dynamic /api/og image generator. */
+export function buildOgImageUrl(params: { title?: string; category?: string } = {}): string {
+  const url = new URL(`${BASE_URL}/api/og`);
+  if (params.title) url.searchParams.set("title", params.title);
+  if (params.category) url.searchParams.set("category", params.category);
+  return url.toString();
+}
 
 export function buildMetadata({
   title,
@@ -17,7 +24,7 @@ export function buildMetadata({
   image?: string;
 }): Metadata {
   const url = `${BASE_URL}${path}`;
-  const ogImage = image ?? DEFAULT_OG_IMAGE;
+  const ogImage = image ?? buildOgImageUrl({ title });
 
   return {
     title,
@@ -88,6 +95,7 @@ export function buildHowToSchema({
 export const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${BASE_URL}/#organization`,
   name: "Susea.ai",
   url: BASE_URL,
   logo: `${BASE_URL}/logo.png`,
@@ -126,6 +134,7 @@ export const ORGANIZATION_SCHEMA = {
 export const WEBSITE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${BASE_URL}/#website`,
   name: "Susea.ai",
   url: BASE_URL,
   inLanguage: "en-US",

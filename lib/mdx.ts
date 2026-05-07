@@ -33,6 +33,9 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       authorRole: fm.authorRole,
       excerpt: fm.excerpt,
       featured: fm.featured ?? false,
+      description: fm.description,
+      keywords: fm.keywords,
+      faq: fm.faq,
     } satisfies BlogPost;
   });
 
@@ -61,6 +64,9 @@ export async function getPostBySlug(
     authorRole: fm.authorRole,
     excerpt: fm.excerpt,
     featured: fm.featured ?? false,
+    description: fm.description,
+    keywords: fm.keywords,
+    faq: fm.faq,
     rawContent: content,
   };
 }

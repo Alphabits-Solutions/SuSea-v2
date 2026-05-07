@@ -38,15 +38,6 @@ const INSIDE_LIST = [
   "Real ROI calculations — time saved, cost reduced, payback period",
 ];
 
-function DownloadIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="7 10 12 15 17 10" />
-      <line x1="12" y1="15" x2="12" y2="3" />
-    </svg>
-  );
-}
 
 export default function ReportForm() {
   const [fname,     setFname]     = useState("");
@@ -70,7 +61,11 @@ export default function ReportForm() {
       return;
     }
     setError("");
-    // TODO: POST to CRM — fetch('/api/capture-lead', { method:'POST', body: JSON.stringify({ fname, lname, email: trimmed, company, role, source:'AI_Readiness_Report' }) })
+    fetch("/api/capture-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fname, lname, email: trimmed, company, role, source: "AI_Readiness_Report" }),
+    }).catch(console.error);
     setSubmitted(true);
   }
 
@@ -153,20 +148,18 @@ export default function ReportForm() {
             {submitted ? (
               /* SUCCESS STATE */
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-[rgba(45,212,160,0.12)] border-2 border-[rgba(45,212,160,0.3)] flex items-center justify-center text-3xl mx-auto mb-5">✅</div>
-                <div className="text-xl font-extrabold tracking-tight mb-2">Your Report Is Ready</div>
-                <p className="text-sm text-[#8b89a0] leading-relaxed mb-6">
-                  Thanks {fname || "there"}! Your AI Readiness Report is ready to download. We&apos;ve also sent a copy to your inbox.
+                <div className="w-16 h-16 rounded-full bg-[rgba(45,212,160,0.12)] border-2 border-[rgba(45,212,160,0.3)] flex items-center justify-center text-3xl mx-auto mb-5">📬</div>
+                <div className="text-xl font-extrabold tracking-tight mb-2">Report On Its Way!</div>
+                <p className="text-sm text-[#8b89a0] leading-relaxed mb-4">
+                  Thanks {fname || "there"}! Your 14-page AI Readiness Report is heading to{" "}
+                  <strong className="text-[#e8e6f0]">{email.trim()}</strong>. Check your inbox — and your spam folder if you don&apos;t see it in a few minutes.
                 </p>
-                <a
-                  href="/reports/susea-ai-readiness-report.pdf"
-                  download="Susea_AI_Readiness_Report.pdf"
-                  className="flex items-center justify-center gap-2.5 w-full text-white font-bold text-[15px] py-4 rounded-[11px] mb-3 no-underline transition-all hover:opacity-90 hover:-translate-y-0.5"
-                  style={{ background: GRAD, boxShadow: "0 6px 24px rgba(43,91,168,0.3)" }}
-                >
-                  <DownloadIcon />
-                  Download Now (PDF · 14 Pages)
-                </a>
+                <div className="flex items-start gap-3 p-4 rounded-[11px] bg-[rgba(45,212,160,0.06)] border border-[rgba(45,212,160,0.18)] text-left mb-6">
+                  <span className="text-base flex-shrink-0 mt-0.5">✅</span>
+                  <p className="text-xs text-[#8b89a0] leading-relaxed">
+                    Your report includes your AI readiness score, use case matrix, 3-phase implementation roadmap, and ROI estimates across all 14 pages.
+                  </p>
+                </div>
                 <p className="text-[13px] text-[#8b89a0] leading-relaxed mb-4">
                   While you&apos;re here — want a free 20-minute call to review your organisation&apos;s actual AI readiness?
                 </p>
@@ -244,10 +237,9 @@ export default function ReportForm() {
                 {error && <p className="font-mono text-[11px] text-[#f05252] mb-3">{error}</p>}
 
                 <button type="button" onClick={handleSubmit} className="w-full text-white font-bold text-[15px] py-[15px] rounded-[11px] border-none cursor-pointer flex items-center justify-center gap-2 tracking-[-0.01em] transition-all hover:opacity-90 hover:-translate-y-0.5 active:translate-y-0" style={{ background: GRAD, boxShadow: "0 6px 24px rgba(43,91,168,0.3)" }}>
-                  <DownloadIcon />
-                  Download Free Report
+                  Send My Free Report →
                 </button>
-                <p className="font-mono text-[11px] text-[#4a4860] text-center mt-3">🔒 No spam · Unsubscribe anytime · 14-page PDF · Instant download</p>
+                <p className="font-mono text-[11px] text-[#4a4860] text-center mt-3">🔒 No spam · Unsubscribe anytime · 14-page PDF · Sent to your inbox</p>
               </>
             )}
           </div>

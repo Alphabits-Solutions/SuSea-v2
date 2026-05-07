@@ -6,23 +6,44 @@ category: "strategy"
 readTime: "8 min read"
 author: "Marcus Thorne"
 authorRole: "Managing Partner"
-excerpt: "Why most generative AI prototypes fail at scale and the structural changes needed to bridge the gap between demo and production."
+excerpt: "Why most AI prototypes fail at scale — and the 3-layer infrastructure needed to bridge the gap."
+description: "Why most AI prototypes fail at scale — and the 3-layer infrastructure needed to bridge the gap."
 featured: false
+keywords:
+  - "AI infrastructure"
+  - "enterprise AI architecture"
+  - "agentic workflows"
+  - "RAG pipeline"
+  - "LLM orchestration"
+  - "AI production deployment"
+  - "evaluation loop"
+  - "AI observability"
+faq:
+  - question: "Why do most enterprise AI pilots fail to reach production?"
+    answer: "The model is rarely the problem. Failure happens in the surrounding infrastructure: missing observability (no way to measure performance drift), absent reliability patterns (no fallbacks or graceful degradation), uncontrolled costs (no per-request budget tracking), stale data pipelines, and undefined security boundaries. Fixing these three layers — data, orchestration, and evaluation — resolves the vast majority of production failures."
+  - question: "What is the most important layer of AI infrastructure to get right first?"
+    answer: "The data plane. Before writing a single prompt, you need a clean versioned data store, a retrieval strategy matched to your use case (vector, keyword, or hybrid), and freshness guarantees. Stale data produces stale responses regardless of model quality. Most teams skip this and pay the price during rollout."
+  - question: "How do you prevent AI system performance from degrading silently over time?"
+    answer: "Build a continuous evaluation loop into your CI/CD pipeline. This means defining ground-truth test cases representative of your production distribution, running them on every model update or data change, and alerting when accuracy drops below a defined threshold. Without this, you won't know the system has degraded until a customer complains."
+  - question: "What should an AI system do when the LLM API is unavailable?"
+    answer: "Every production AI system needs a defined fallback behaviour for each failure mode: LLM API unavailable (fall back to cached response or rule-based handler), retrieval returns nothing (respond with a graceful 'I don't know' rather than hallucinating), latency exceeds SLA (return partial result with a disclaimer). These behaviours must be specified before launch, not discovered in production."
 ---
 
-Why do 70% of enterprise AI pilots fail to reach production? The answer is rarely the model. It's almost always the infrastructure surrounding it.
+70% of enterprise AI pilots never reach production. The model is almost never the reason.
+
+The answer lives in the infrastructure surrounding the model — and most teams underestimate how much of it exists.
 
 ## The Demo-to-Production Gap
 
-A language model running in a Jupyter notebook is not an enterprise product. Between that notebook and a production system that handles 10,000 concurrent users sits a chasm that most teams underestimate.
-
-The gap includes:
+A language model running in a Jupyter notebook is not an enterprise product. Between that notebook and a production system handling 10,000 concurrent users sits a chasm that contains:
 
 - **Observability** — you can't improve what you can't measure
 - **Reliability** — fallbacks, retries, and graceful degradation
 - **Cost governance** — budget controls and per-request cost tracking
 - **Data pipelines** — freshness, quality, and retrieval architecture
 - **Security** — authentication, authorisation, and prompt boundaries
+
+The architectural challenge is building all five simultaneously, before you know exactly what the system needs to do at scale.
 
 ## What Durable AI Infrastructure Looks Like
 
@@ -31,31 +52,40 @@ The gap includes:
 Everything starts with data. Before a single prompt is written, you need:
 
 1. A clean, versioned, and documented data store
-2. A retrieval strategy (vector search, keyword, hybrid) matched to your use case
-3. Freshness guarantees — stale data produces stale responses
+2. A retrieval strategy — vector search, keyword, or hybrid — matched to your use case
+3. Freshness guarantees — stale data produces stale responses regardless of model quality
+
+**The trade-off:** Vector search gives semantic flexibility but is expensive to maintain at high update frequency. Keyword search is cheaper and exact, but misses synonyms and context. Most production systems use hybrid retrieval with a re-ranker — optimise retrieval architecture before optimising the model.
 
 ### Layer 2: The Orchestration Layer
 
 This is where most teams cut corners. The orchestration layer manages:
 
 - **Context management** — what information reaches the model and in what order
-- **Tool use** — how agents interact with external systems
+- **Tool use** — how agents interact with external systems and APIs
 - **State persistence** — how conversations maintain continuity across sessions
+
+Poor orchestration is why agents hallucinate. The model isn't lying — it's filling gaps left by incomplete context.
 
 ### Layer 3: The Evaluation Loop
 
-Production AI systems degrade silently. Without continuous evaluation, you won't know your model's performance has drifted until a customer complains.
+Production AI systems degrade silently. Without continuous evaluation, you won't know performance has drifted until a customer complains. Build evaluation into your CI/CD pipeline from day one:
 
-Build evaluation into your CI/CD pipeline from day one.
+1. Define ground-truth test cases representative of your production distribution
+2. Run them on every model update or data change
+3. Alert when accuracy drops below threshold
 
 ## The Architectural Principle
 
 > Build for the failure mode, not the happy path.
 
-Every component should have a defined behaviour when things go wrong. What does the system do when the LLM API is unavailable? When retrieval returns nothing? When latency exceeds your SLA?
+Every component needs a defined behaviour when things go wrong:
+- LLM API unavailable → fall back to cached response or rule-based handler
+- Retrieval returns nothing → respond with a graceful "I don't know"
+- Latency exceeds SLA → return partial result with a disclaimer
 
-The teams that answer these questions before launch are the ones with AI in production. The others are still in pilot.
+Teams that answer these questions before launch are the ones with AI in production. The others are still in pilot — and wondering why the demo worked fine.
 
 ---
 
-*Ready to build AI infrastructure that lasts? [Start a conversation](/contact) with our architecture team.*
+*Ready to build AI infrastructure that lasts? [Start a conversation](/contact) with our architecture team — or read about [optimizing inference costs](/blog/optimizing-inference-costs) once your infrastructure is in place.*

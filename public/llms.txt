@@ -1,0 +1,37 @@
+# Susea.ai
+
+> Susea.ai is an enterprise AI agency that builds, fixes, and optimises AI agents, agentic workflows, and custom software for businesses in the USA, UK, Europe, and Singapore. We specialise in moving AI from demo to production.
+
+## Services
+
+- [Custom AI Agents](https://susea.ai/services/agents): Custom-built AI agents for calling, support, sales, HR, admin, and marketing — fully integrated with your existing stack and live in 7 days. Pre-architected for GPT-4o, Claude, Gemini, and open-source LLMs.
+- [AI Consulting](https://susea.ai/services/consulting): AI readiness audits and strategic consulting to eliminate technical debt and misalignment before a single line of code is written.
+- [Rapid MVP](https://susea.ai/services/rapid-mvp): High-performance Web, Mobile, and SaaS MVPs engineered with precision and shipped in 4 weeks.
+- [Fix My Agent](https://susea.ai/services/fix-agent): Diagnosis and rehabilitation of failing AI agents — hallucinations, loop errors, and broken API connections resolved with surgical precision.
+- [Vibe Code Rescue](https://susea.ai/services/vibe-code-rescue): Transformation of AI-prototyped codebases into secure, scalable, maintainable production architectures.
+- [AI Security](https://susea.ai/services/security): AI-driven threat detection, regulatory compliance (GDPR, HIPAA), and security architecture for enterprise AI systems.
+- [Hire Engineers](https://susea.ai/services/hire): Pre-vetted senior engineers and designers ready to integrate into your team within 72 hours — no 3-month hiring cycles.
+- [Maintenance](https://susea.ai/services/maintenance): Ongoing architecture maintenance to keep AI systems secure, optimised, and ready to scale.
+
+## Blog
+
+- [Optimizing Inference Costs in High-Traffic Environments](https://susea.ai/blog/optimizing-inference-costs): How to reduce LLM inference costs by 80% using dynamic quantization, sparse pruning, and KV cache optimisation with PagedAttention on enterprise GPU infrastructure.
+- [Beyond the LLM: Architecting Durable AI Infrastructure](https://susea.ai/blog/beyond-the-llm): Why 70% of enterprise AI pilots fail at scale and the three-layer infrastructure — data plane, orchestration, evaluation loop — required to bridge the demo-to-production gap.
+- [The CEO's Guide to AI Sovereignty](https://susea.ai/blog/ceo-guide-ai-sovereignty): A four-level framework for executives to own their AI intellectual property — from full public API dependence to full-stack ownership of training data, model weights, and inference infrastructure.
+
+## Resources
+
+- [Free AI Tools](https://susea.ai/resources/free-tools): Three free tools: AI Agent Diagnostic (instant health score), AI Readiness Scorecard for CTOs, and a free 14-page AI Readiness Report.
+- [AI Agent Diagnostic](https://susea.ai/resources/ai-agent-diagnostic): Instant health score for your existing AI agent deployment — identifies hallucination risk, integration failures, and performance bottlenecks.
+- [AI Readiness Scorecard](https://susea.ai/resources/ai-readiness-scorecard): Benchmarking tool for CTOs and SMB owners to assess organisational AI readiness across data, infrastructure, and team capability dimensions.
+- [AI Readiness Report](https://susea.ai/resources/ai-readiness-report): Personalised 14-page report on your organisation's AI readiness, generated from your scorecard responses.
+- [Playbooks](https://susea.ai/resources/playbooks): Free downloadable playbooks covering AI agency hiring, avoiding the $200K AI mistake, moving from vibe code to production, and the 4-week AI MVP framework.
+
+## Case Studies
+
+- [Case Studies](https://susea.ai/case-studies): Real AI agent deployments, consulting wins, and rapid builds across real estate, healthcare, fintech, legal, and e-commerce. Includes measurable outcomes: cost savings, automation rates, and deployment timelines.
+
+## Company
+
+- [About Susea.ai](https://susea.ai/about): The story, mission, values, and founding team behind Susea.ai. Offices in San Francisco, London, and Singapore.
+- [Contact](https://susea.ai/contact): Book a strategy session or send a message. No pitch deck required — an honest conversation about your needs.

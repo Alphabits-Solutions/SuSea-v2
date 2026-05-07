@@ -3,14 +3,13 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllPosts, getPostBySlug } from "@/lib/mdx";
 import JsonLd from "@/components/JsonLd";
-import { buildMetadata, buildBreadcrumbs } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, buildOgImageUrl } from "@/lib/metadata";
 import ReadingProgress from "@/components/sections/blog/ReadingProgress";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-// SSG — pre-render every blog post at build time
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((p) => ({ slug: p.slug }));
@@ -20,12 +19,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return {};
-  return buildMetadata({
-    title: post.title,
-    description: post.excerpt,
-    path: `/blog/${slug}`,
-    type: "article",
-  });
+
+  const metaDescription = post.description ?? post.excerpt;
+  const ogImage = buildOgImageUrl({ title: post.title, category: post.category });
+
+  return {
+    ...buildMetadata({
+      title: post.title,
+      description: metaDescription,
+      path: `/blog/${slug}`,
+      type: "article",
+      image: ogImage,
+    }),
+    keywords: post.keywords,
+    openGraph: {
+      title: post.title,
+      description: metaDescription,
+      url: `https://susea.ai/blog/${slug}`,
+      type: "article",
+      siteName: "Susea.ai",
+      locale: "en_US",
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+      publishedTime: post.date,
+      modifiedTime: post.date,
+      section: post.category,
+      tags: post.keywords ?? [post.category, "AI", "Susea.ai"],
+      authors: [post.author],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: Props) {
@@ -33,21 +54,24 @@ export default async function BlogPostPage({ params }: Props) {
   const post = await getPostBySlug(slug);
   if (!post) notFound();
 
+  const postKeywords = post.keywords ?? ["AI agents", "enterprise AI", post.category, "Susea.ai"];
+  const ogImageUrl = buildOgImageUrl({ title: post.title, category: post.category });
+
   const ARTICLE_SCHEMA = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
-    description: post.excerpt,
-    articleBody: post.rawContent.slice(0, 500),
+    description: post.description ?? post.excerpt,
+    articleBody: post.rawContent,
     articleSection: post.category,
-    keywords: ["AI", "artificial intelligence", post.category, "Susea.ai"],
+    keywords: postKeywords,
     inLanguage: "en-US",
     datePublished: post.date,
     dateModified: post.date,
     url: `https://susea.ai/blog/${slug}`,
     image: {
       "@type": "ImageObject",
-      url: "https://susea.ai/og-default.png",
+      url: ogImageUrl,
       width: 1200,
       height: 630,
     },
@@ -55,19 +79,13 @@ export default async function BlogPostPage({ params }: Props) {
       "@type": "Person",
       name: post.author,
       jobTitle: post.authorRole,
-      sameAs: [
-        "https://linkedin.com/company/suseaai",
-        "https://twitter.com/suseaai",
-      ],
+      sameAs: ["https://linkedin.com/company/suseaai", "https://twitter.com/suseaai"],
     },
     publisher: {
       "@type": "Organization",
       name: "Susea.ai",
       url: "https://susea.ai",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://susea.ai/logo.png",
-      },
+      logo: { "@type": "ImageObject", url: "https://susea.ai/logo.png" },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -81,10 +99,23 @@ export default async function BlogPostPage({ params }: Props) {
     { name: post.title, url: `https://susea.ai/blog/${slug}` },
   ]);
 
+  const FAQ_SCHEMA = post.faq?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faq.map(({ question, answer }) => ({
+          "@type": "Question",
+          name: question,
+          acceptedAnswer: { "@type": "Answer", text: answer },
+        })),
+      }
+    : null;
+
   return (
     <>
       <JsonLd data={ARTICLE_SCHEMA} />
       <JsonLd data={BREADCRUMB_SCHEMA} />
+      {FAQ_SCHEMA && <JsonLd data={FAQ_SCHEMA} />}
 
       <div className="pt-32 pb-20 max-w-[1440px] mx-auto px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -124,6 +155,18 @@ export default async function BlogPostPage({ params }: Props) {
                 <span className="material-symbols-outlined text-lg">label</span>
                 <span className="capitalize">{post.category}</span>
               </div>
+              {post.keywords && post.keywords.length > 0 && (
+                <div className="pl-4 pt-2 border-t border-outline-variant/10">
+                  <div className="text-xs uppercase tracking-widest text-on-surface-variant/40 mb-3">Keywords</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {post.keywords.map((kw) => (
+                      <span key={kw} className="px-2 py-0.5 rounded-full bg-surface-container text-xs text-on-surface-variant/60 font-mono">
+                        {kw}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </nav>
             <ReadingProgress />
           </aside>
@@ -141,11 +184,9 @@ export default async function BlogPostPage({ params }: Props) {
               <div className="flex flex-wrap items-center gap-6 text-on-surface-variant/60 font-mono text-sm">
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-primary text-base">calendar_today</span>
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  }).toUpperCase()}
+                  {new Date(post.date)
+                    .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+                    .toUpperCase()}
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-primary text-base">schedule</span>
@@ -162,6 +203,28 @@ export default async function BlogPostPage({ params }: Props) {
             <article className="prose prose-invert prose-lg max-w-none prose-headings:font-headline prose-headings:tracking-tight prose-a:text-primary prose-strong:text-on-surface prose-code:text-secondary prose-code:font-mono">
               <MDXRemote source={post.rawContent} />
             </article>
+
+            {/* FAQ section — visible text mirrors FAQPage JSON-LD */}
+            {post.faq && post.faq.length > 0 && (
+              <section className="mt-24 pt-12 border-t border-outline-variant/10" aria-labelledby="faq-heading">
+                <h2
+                  id="faq-heading"
+                  className="text-3xl font-headline font-bold tracking-tight mb-10"
+                >
+                  Frequently Asked Questions
+                </h2>
+                <dl className="space-y-8">
+                  {post.faq.map(({ question, answer }) => (
+                    <div key={question} className="p-6 rounded-xl bg-surface-container border border-outline-variant/10">
+                      <dt className="text-lg font-headline font-semibold text-on-surface mb-3">
+                        {question}
+                      </dt>
+                      <dd className="text-on-surface-variant leading-relaxed">{answer}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            )}
           </div>
         </div>
       </div>

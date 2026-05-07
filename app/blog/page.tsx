@@ -4,6 +4,8 @@ import { getAllPosts } from "@/lib/mdx";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/metadata";
 
+const CATEGORIES = ["All", "Engineering", "Strategy", "Operations", "Deployment", "Ethics", "Security"];
+
 const CATEGORY_STYLES: Record<string, { bg: string; icon: string }> = {
   engineering: { bg: "bg-gradient-to-br from-blue-600/20 to-cyan-500/10", icon: "code" },
   strategy: { bg: "bg-gradient-to-br from-violet-600/20 to-purple-500/10", icon: "bar_chart" },
@@ -18,23 +20,46 @@ function getCategoryStyle(category: string) {
   return CATEGORY_STYLES[category?.toLowerCase()] ?? DEFAULT_STYLE;
 }
 
-export const metadata: Metadata = buildMetadata({
-  title: "Blog — Practical AI. No Hype.",
-  description:
-    "Technical insights, strategy playbooks, and engineering deep-dives from the Susea.ai team. Curated for builders and C-suite leaders.",
-  path: "/blog",
-});
+interface Props {
+  searchParams: Promise<{ category?: string }>;
+}
 
-export default async function BlogPage() {
-  const posts = await getAllPosts();
-  const featured = posts.find((p) => p.featured) ?? posts[0];
-  const rest = posts.filter((p) => p.slug !== featured?.slug);
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const { category } = await searchParams;
+  if (category) {
+    const label = category.charAt(0).toUpperCase() + category.slice(1);
+    return buildMetadata({
+      title: `${label} — Susea.ai Blog`,
+      description: `${label} articles from the Susea.ai team. Technical deep-dives, strategy playbooks, and engineering insights.`,
+      path: `/blog?category=${category}`,
+    });
+  }
+  return buildMetadata({
+    title: "Blog — Practical AI. No Hype.",
+    description:
+      "Technical insights, strategy playbooks, and engineering deep-dives from the Susea.ai team. Curated for builders and C-suite leaders.",
+    path: "/blog",
+  });
+}
+
+export default async function BlogPage({ searchParams }: Props) {
+  const { category } = await searchParams;
+  const activeCategory = category?.toLowerCase() ?? "";
+
+  const allPosts = await getAllPosts();
+  const posts = activeCategory
+    ? allPosts.filter((p) => p.category.toLowerCase() === activeCategory)
+    : allPosts;
+
+  const featured = !activeCategory ? (posts.find((p) => p.featured) ?? posts[0]) : null;
+  const rest = featured ? posts.filter((p) => p.slug !== featured.slug) : posts;
 
   const ITEM_LIST_SCHEMA = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Susea.ai Blog",
-    url: "https://susea.ai/blog",
+    name: activeCategory ? `Susea.ai Blog — ${activeCategory}` : "Susea.ai Blog",
+    url: activeCategory ? `https://susea.ai/blog?category=${activeCategory}` : "https://susea.ai/blog",
+    description: "Technical insights, strategy playbooks, and engineering deep-dives from the Susea.ai team.",
     itemListElement: posts.map((post, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -65,19 +90,29 @@ export default async function BlogPage() {
           </p>
         </header>
 
-        {/* Category filter — client component for interactivity */}
-        <div className="max-w-7xl mx-auto px-8 mb-16 flex gap-3 overflow-x-auto no-scrollbar pb-2">
-          {["All", "Engineering", "Strategy", "Operations", "Deployment", "Ethics"].map((cat) => (
-            <button
-              key={cat}
-              className="px-6 py-2 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors text-sm font-label shrink-0"
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        {/* Category filter — URL-based, crawlable */}
+        <nav className="max-w-7xl mx-auto px-8 mb-16 flex gap-3 overflow-x-auto no-scrollbar pb-2" aria-label="Filter by category">
+          {CATEGORIES.map((cat) => {
+            const value = cat === "All" ? "" : cat.toLowerCase();
+            const isActive = activeCategory === value;
+            return (
+              <Link
+                key={cat}
+                href={value ? `/blog?category=${value}` : "/blog"}
+                className={`px-6 py-2 rounded-full text-sm font-label shrink-0 transition-colors ${
+                  isActive
+                    ? "bg-primary text-on-primary font-bold"
+                    : "bg-surface-container text-on-surface-variant hover:text-on-surface"
+                }`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {cat}
+              </Link>
+            );
+          })}
+        </nav>
 
-        {/* Featured Post */}
+        {/* Featured Post — only shown on unfiltered view */}
         {featured && (
           <section className="max-w-7xl mx-auto px-8 mb-24">
             <Link
@@ -131,50 +166,57 @@ export default async function BlogPage() {
 
         {/* Article grid */}
         <section className="max-w-7xl mx-auto px-8 mb-32">
-          <div className="grid md:grid-cols-3 gap-12">
-            {rest.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group overflow-hidden rounded-xl"
-              >
-                <article className="bg-surface-container border border-outline-variant/10 group-hover:border-primary/20 transition-colors h-full flex flex-col">
-                  {/* Thumbnail */}
-                  <div className={`aspect-[16/9] ${getCategoryStyle(post.category).bg} flex items-center justify-center flex-shrink-0`}>
-                    <span
-                      className="material-symbols-outlined text-5xl text-on-surface/20"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
+          {rest.length === 0 ? (
+            <p className="text-on-surface-variant text-center py-24">
+              No articles in this category yet — check back soon.
+            </p>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-12">
+              {rest.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group overflow-hidden rounded-xl"
+                >
+                  <article className="bg-surface-container border border-outline-variant/10 group-hover:border-primary/20 transition-colors h-full flex flex-col">
+                    <div
+                      className={`aspect-[16/9] ${getCategoryStyle(post.category).bg} flex items-center justify-center flex-shrink-0`}
                     >
-                      {getCategoryStyle(post.category).icon}
-                    </span>
-                  </div>
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded-full">
-                        {post.category}
-                      </span>
-                      <span className="text-xs text-on-surface-variant/60 font-mono">
-                        {post.readTime}
+                      <span
+                        className="material-symbols-outlined text-5xl text-on-surface/20"
+                        style={{ fontVariationSettings: "'FILL' 1" }}
+                      >
+                        {getCategoryStyle(post.category).icon}
                       </span>
                     </div>
-                    <h3 className="text-xl font-headline font-bold mb-3 group-hover:text-primary transition-colors leading-snug">
-                      {post.title}
-                    </h3>
-                    <p className="text-on-surface-variant text-sm line-clamp-3 mb-4 flex-1">
-                      {post.excerpt}
-                    </p>
-                    <span className="text-sm font-label text-on-surface-variant/60 font-mono mt-auto">
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </div>
-                </article>
-              </Link>
-            ))}
-          </div>
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded-full">
+                          {post.category}
+                        </span>
+                        <span className="text-xs text-on-surface-variant/60 font-mono">
+                          {post.readTime}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-headline font-bold mb-3 group-hover:text-primary transition-colors leading-snug">
+                        {post.title}
+                      </h3>
+                      <p className="text-on-surface-variant text-sm line-clamp-3 mb-4 flex-1">
+                        {post.excerpt}
+                      </p>
+                      <span className="text-sm font-label text-on-surface-variant/60 font-mono mt-auto">
+                        {new Date(post.date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Newsletter */}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
       "We fix broken AI agents, build new ones, ship software, and consult teams — so your business runs better, faster, and smarter.",
     images: [
       {
-        url: "https://susea.ai/og-default.png",
+        url: "https://susea.ai/api/og",
         width: 1200,
         height: 630,
         alt: "Susea.ai — Enterprise AI Agency",
@@ -74,12 +75,17 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@suseaai",
     creator: "@suseaai",
-    images: ["https://susea.ai/og-default.png"],
+    images: ["https://susea.ai/api/og"],
   },
   robots: {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true },
+  },
+  verification: {
+    other: {
+      "msvalidate.01": "65DA1CD4E8E9D5D435294FCF8F3AC164",
+    },
   },
 };
 
@@ -104,6 +110,23 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-7M0QJRB78Q"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-7M0QJRB78Q');
+          `}
+        </Script>
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="u3Sq2tYNO9/g5mirL/Urpg"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

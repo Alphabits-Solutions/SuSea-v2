@@ -635,7 +635,11 @@ export default function ScorecardTool() {
       return;
     }
     setEmailError("");
-    // TODO: POST to CRM — fetch('/api/capture-lead', { method:'POST', body: JSON.stringify({ email: val, role, score: computeScore(), source:'AI_Readiness_Scorecard' }) })
+    fetch("/api/capture-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: val, role, score: computeScore(), source: "AI_Readiness_Scorecard" }),
+    }).catch(console.error);
 
     const s  = computeScore();
     const cs = computeCatScores();

@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
-import { buildMetadata, ORGANIZATION_SCHEMA } from "@/lib/metadata";
+import { buildMetadata, buildBreadcrumbs, ORGANIZATION_SCHEMA } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About Us",
+  title: "About Susea.ai — Enterprise AI Agency Team",
   description:
     "Built by builders for builders. Susea.ai architects digital infrastructure that empowers visionaries to scale without limits. Learn our story, mission, and team.",
   path: "/about",
@@ -64,13 +64,19 @@ const TEAM = [
 const ABOUT_PAGE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
+  "@id": "https://susea.ai/about",
   name: "About Susea.ai",
   url: "https://susea.ai/about",
   description:
     "Built by builders for builders. Learn about Susea.ai's story, mission, values, and team.",
   inLanguage: "en-US",
-  mainEntity: ORGANIZATION_SCHEMA,
+  mainEntity: { "@id": "https://susea.ai/#organization" },
 };
+
+const BREADCRUMB_SCHEMA = buildBreadcrumbs([
+  { name: "Home", url: "https://susea.ai" },
+  { name: "About", url: "https://susea.ai/about" },
+]);
 
 const TEAM_SCHEMA = {
   "@context": "https://schema.org",
@@ -101,6 +107,7 @@ export default function AboutPage() {
     <>
       <JsonLd data={ABOUT_PAGE_SCHEMA} />
       <JsonLd data={TEAM_SCHEMA} />
+      <JsonLd data={BREADCRUMB_SCHEMA} />
 
       {/* Hero */}
       <section className="relative min-h-[819px] flex items-center justify-center px-8 overflow-hidden pt-24">

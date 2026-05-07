@@ -6,7 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import { buildMetadata, buildBreadcrumbs } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact",
+  title: "Contact Susea.ai — Book a Strategy Session",
   description:
     "No hard sell. No pitch deck. Just an honest conversation about what you need and whether we can help. Book a strategy session or send us a message.",
   path: "/contact",
