@@ -48,6 +48,13 @@ export const metadata: Metadata = {
     "GPT-4 agents",
     "Claude agents",
     "AI for business",
+    "fixing broken AI agents",
+    "AI agent troubleshooting",
+    "AI agent repair",
+    "AI hallucination fix",
+    "agentic workflow optimization",
+    "multi-agent orchestration",
+    "AI agent guardrails",
   ],
   icons: {
     icon: "/images/icon.png",

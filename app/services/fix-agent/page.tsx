@@ -5,9 +5,9 @@ import JsonLd from "@/components/JsonLd";
 import { buildMetadata, buildBreadcrumbs, buildHowToSchema } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Fix AI Agents — Precision Engineered Repair",
+  title: "Fix My AI Agent — Emergency AI Agent Repair | Susea.ai",
   description:
-    "Stop losing revenue to hallucinations, loop errors, and broken API connections. Our engineers diagnose and rehabilitate failing AI infrastructure with surgical precision.",
+    "Your AI agent is breaking in production. We diagnose and fix hallucinations, infinite loops, and API failures — with 24-hour response and 99.8% uptime track record.",
   path: "/services/fix-agent",
 });
 
@@ -28,9 +28,9 @@ const DIAGNOSTIC_STEPS = [
 ];
 
 const FIX_OPTIONS = [
-  { option: "A", title: "Quick Diagnostic", desc: "A deep dive into 3 core workflows to identify immediate bottlenecks.", cta: "Select Fix", primary: false },
+  { option: "A", title: "Emergency Triage", desc: "24-hour rapid diagnosis and patch for critical production failures. We stabilise first, optimise second.", cta: "Start Triage", primary: true, badge: "Fastest Fix" },
   { option: "B", title: "Prompt Refactor", desc: "Full rewrites of your most complex logic gates for maximum reliability.", cta: "Select Fix", primary: false },
-  { option: "C", title: "The Complete Rehab", desc: "End-to-end infrastructure overhaul including RAG and API middleware.", cta: "Select Fix", primary: true, badge: "Most Requested" },
+  { option: "C", title: "The Complete Rehab", desc: "End-to-end infrastructure overhaul including RAG and API middleware.", cta: "Select Fix", primary: false, badge: "Most Requested" },
   { option: "D", title: "Architecture On-Call", desc: "Retained engineering hours for continuous optimization and fixes.", cta: "Select Fix", primary: false },
 ];
 
@@ -42,21 +42,22 @@ const STATS = [
 ];
 
 const FAQS = [
-  { q: "How long does a typical fix take?", a: "Minor logic patches can be deployed in 24-48 hours. Full structural rehabs typically take 5-10 business days depending on complexity." },
-  { q: "Do you work with custom-built LLM agents?", a: "Yes. We support custom Python/TS implementations, as well as no-code frameworks like n8n and Make." },
-  { q: "Is the diagnostic truly free?", a: "Our initial 30-minute discovery call and high-level audit are free. Deep technical forensic reports are part of our paid engagement." },
-  { q: "Will you need access to our proprietary data?", a: "We operate under strict NDAs and can work within your local environment or via sanitised log exports to ensure zero data leakage." },
-  { q: "What if the agent is \"unfixable\"?", a: "If the architecture is fundamentally flawed, we will provide a blueprint for a modern, stable replacement rather than trying to patch a sinking ship." },
+  { q: "How do I stop my AI agent from looping?", a: "Infinite loops almost always stem from one of three causes: a missing termination condition in the prompt, a tool that silently errors and retries, or a memory context that keeps reintroducing the same failed state. Our Log Audit step isolates the exact node within hours." },
+  { q: "Can you fix a hallucinating agent?", a: "Yes. Hallucinations are typically caused by stale RAG data, over-broad retrieval, or prompts that lack sufficient grounding instructions. We refactor the retrieval pipeline and add output-validation guardrails to eliminate confident wrong answers." },
+  { q: "How fast can you respond to an agent emergency?", a: "Our Emergency Triage option has a 24-hour response SLA. For clients on Architecture On-Call retainers, we maintain a 4-hour response window during business hours across US and EU timezones." },
+  { q: "What causes AI agents to fail in production?", a: "The five most common causes are prompt drift over time, tool misuse under edge-case inputs, token budget exhaustion on large payloads, RAG knowledge staleness, and API rate-limit cascades that the agent has no fallback for." },
+  { q: "Do you work with all AI frameworks and platforms?", a: "Yes. We support LangChain, LlamaIndex, AutoGen, CrewAI, custom Python/TypeScript implementations, and no-code platforms including n8n, Make.com, and Zapier AI integrations." },
+  { q: "What if the agent architecture is beyond repair?", a: "If the underlying design is fundamentally flawed, we provide a full replacement blueprint and can rebuild from scratch — usually in less time than further patching would take. We will tell you honestly which path makes sense." },
 ];
 
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Fix AI Agents",
+  name: "Fix My AI Agent — Emergency AI Agent Repair",
   url: "https://susea.ai/services/fix-agent",
   provider: { "@type": "Organization", name: "Susea.ai", url: "https://susea.ai" },
-  description: "Diagnose and rehabilitate failing AI agents, prompt chains, and LLM integrations.",
-  serviceType: "AI Agent Repair & Optimization",
+  description: "Diagnose and fix broken AI agents suffering from hallucinations, infinite loops, API failures, and prompt drift. Emergency repair with 24-hour response and 99.8% uptime track record.",
+  serviceType: "AI Agent Repair & Emergency Optimization",
   areaServed: ["US", "GB", "EU", "SG"],
 };
 
@@ -71,9 +72,9 @@ const FAQ_SCHEMA = {
 };
 
 const HOWTO_SCHEMA = buildHowToSchema({
-  name: "How to Diagnose and Fix a Broken AI Agent",
-  description: "Susea.ai's 5-step diagnostic process for rehabilitating failing AI agent infrastructure.",
-  totalTime: "P3D",
+  name: "How to Get Your Broken AI Agent Fixed in 24 Hours",
+  description: "Susea.ai's 5-step emergency diagnostic and repair process for failing AI agent infrastructure.",
+  totalTime: "P1D",
   steps: DIAGNOSTIC_STEPS.map((s) => ({ name: s.title, text: s.desc })),
 });
 
@@ -103,7 +104,7 @@ export default function FixAgentPage() {
           </span>
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter font-headline mb-8 leading-tight">
             Your AI Agent Is{" "}
-            <span className="signature-text-gradient">Broken.</span> We&apos;ll Fix It.
+            <span className="signature-text-gradient">Broken.</span> We Fix It — Fast.
           </h1>
           <p className="text-xl md:text-2xl text-on-surface-variant max-w-3xl mx-auto mb-12 font-body">
             Stop losing revenue to hallucinations, loop errors, and broken API
@@ -136,9 +137,9 @@ export default function FixAgentPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: "error_outline", title: "Infinite Loop Logic", desc: "Agents caught in self-referential cycles consume tokens and API calls without ever reaching a resolution." },
-              { icon: "psychology_alt", title: "Knowledge Drifts", desc: "Old data or poorly structured RAG pipelines cause agents to provide confidently wrong answers to critical clients." },
-              { icon: "link_off", title: "API Authentication Failure", desc: "Silent middleware failures prevent your AI from accessing the tools it needs to execute workflows effectively." },
+              { icon: "error_outline", title: "Loop Hell", desc: "Agents caught in self-referential cycles consume tokens and API calls without ever reaching a resolution — burning budget with every iteration." },
+              { icon: "psychology_alt", title: "Hallucination Cascade", desc: "Stale RAG data or poorly structured retrieval pipelines cause agents to deliver confidently wrong answers to critical clients." },
+              { icon: "link_off", title: "Tool Execution Failure", desc: "Silent middleware errors and broken API authentication prevent your agent from accessing the tools it needs to complete any workflow." },
             ].map(({ icon, title, desc }) => (
               <div key={title} className="glass-panel p-8 rounded-xl border border-outline-variant/15">
                 <span className="material-symbols-outlined text-4xl text-secondary-container mb-6 block">{icon}</span>

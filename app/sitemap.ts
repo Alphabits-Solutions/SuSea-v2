@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   { url: "/services/security", priority: 0.8, changeFrequency: "monthly" as const },
   { url: "/services/hire", priority: 0.7, changeFrequency: "monthly" as const },
   { url: "/services/maintenance", priority: 0.8, changeFrequency: "monthly" as const },
+  { url: "/services/custom-agents", priority: 0.8, changeFrequency: "monthly" as const },
   { url: "/resources/free-tools", priority: 0.8, changeFrequency: "weekly" as const },
   { url: "/resources/ai-agent-diagnostic", priority: 0.8, changeFrequency: "monthly" as const },
   { url: "/resources/ai-readiness-scorecard", priority: 0.8, changeFrequency: "monthly" as const },

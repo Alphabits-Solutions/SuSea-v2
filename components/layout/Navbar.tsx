@@ -38,6 +38,10 @@ const RESOURCES_GROUPS = [
     items: [{ label: "Free AI Tools", href: "/resources/free-tools" }],
   },
   {
+    group: "Diagnostics",
+    items: [{ label: "AI Agent Health Check", href: "/resources/ai-agent-diagnostic" }],
+  },
+  {
     group: "Playbooks",
     items: [{ label: "AI Playbooks", href: "/resources/playbooks" }],
   },
@@ -85,6 +89,7 @@ export default function Navbar() {
             width={140}
             height={36}
             className="h-9 w-auto"
+            style={{ filter: "brightness(0) invert(1)" }}
             priority
           />
         </Link>
@@ -195,9 +200,9 @@ export default function Navbar() {
             </button>
 
             {resourcesOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[320px]">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[460px]">
                 <div className="bg-surface-container-low border border-outline-variant/15 rounded-2xl shadow-2xl shadow-black/40 p-6">
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-3 gap-6">
                     {RESOURCES_GROUPS.map(({ group, items }) => (
                       <div key={group}>
                         <p className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3 px-2">

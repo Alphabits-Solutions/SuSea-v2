@@ -331,6 +331,12 @@ export default function AgentsPage() {
                 Browse Agent Library
               </Link>
             </div>
+            <p className="text-sm text-on-surface-variant mt-4">
+              Need an agent built around your specific industry?{" "}
+              <Link href="/services/custom-agents" className="text-primary font-semibold hover:underline">
+                See industry-specific builds →
+              </Link>
+            </p>
           </div>
 
           {/* Abstract visualization */}

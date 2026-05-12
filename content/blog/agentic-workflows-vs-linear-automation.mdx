@@ -1,0 +1,104 @@
+---
+title: "Agentic Workflows vs. Linear Automation: What Is Right for Your Business?"
+slug: "agentic-workflows-vs-linear-automation"
+date: "2026-05-05"
+category: "strategy"
+author: "Sarah Jenkins"
+authorRole: "Ops Strategy"
+excerpt: "Not every process needs an AI agent. Here is how to choose between rule-based automation and agentic workflows before you commit budget."
+keywords: ["agentic workflows", "AI automation", "linear automation", "multi-agent systems", "AI workflow design"]
+faq:
+  - q: "What is the difference between agentic AI and traditional automation?"
+    a: "Traditional automation executes a fixed sequence of predefined steps — if A then B, always. Agentic AI dynamically decides which steps to take based on the current context, can handle ambiguous inputs, and can recover from unexpected situations without a human rewriting the workflow."
+  - q: "When should I use agentic workflows instead of rule-based automation?"
+    a: "Use agentic workflows when inputs are ambiguous or variable, when the process requires judgment or synthesis, when edge cases are frequent enough that maintaining a decision tree becomes impractical, or when the workflow must adapt to new information mid-execution."
+  - q: "Are agentic workflows more expensive than traditional automation?"
+    a: "Yes, typically — both to build and to run. LLM API calls add per-request cost that rule-based automation does not have. The question is whether the value delivered (handling complex cases, eliminating manual work on exceptions) justifies that cost. For high-volume, low-complexity tasks, rule-based automation usually wins on cost."
+---
+
+The AI agent conversation has a gravitational pull. Once you have seen what an agent can do — handle unstructured inputs, make decisions, recover from unexpected situations — it is tempting to reach for it as the solution to every automation problem.
+
+Resist that temptation. Not because agents are overrated, but because reaching for the most powerful tool when a simpler one would do costs you time, money, and complexity you do not need. Knowing when to use an agent and when to use traditional automation is one of the more valuable judgement calls in enterprise AI strategy.
+
+This article gives you a framework for making that call.
+
+---
+
+## The Core Distinction
+
+**Linear automation** executes a predefined sequence of steps in a fixed order. If A happens, do B, then C, then D. The logic is explicit, deterministic, and maintainable without AI expertise. Zapier flows, n8n pipelines, and most RPA implementations are linear automation.
+
+**Agentic workflows** delegate the decision about which steps to take to an AI that reasons from context. The agent receives a goal, evaluates the current situation, decides what tools to use, executes those tools, evaluates the result, and iterates — without a human specifying the exact sequence in advance.
+
+The practical difference is how each handles deviation from the expected path.
+
+In linear automation, an unexpected input — a form field in the wrong format, a missing required field, a response from an API that was not anticipated — typically breaks the workflow. Someone has to update the logic to handle the new case.
+
+In an agentic workflow, the agent can reason about the unexpected input and decide how to handle it. It can ask the user for clarification, try an alternative approach, or flag the situation for human review — without the workflow being rewritten.
+
+This flexibility is what makes agents powerful. It is also what makes them more expensive and harder to reason about.
+
+---
+
+## A Decision Framework
+
+Two dimensions determine which approach is appropriate: **input variability** and **process complexity**.
+
+| | Low Complexity | High Complexity |
+|---|---|---|
+| **Low Variability** | Rule-based automation | Rule-based automation with exceptions handled manually |
+| **High Variability** | AI classification + rule-based routing | Agentic workflow |
+
+**Low variability, low complexity** is the classic automation candidate. Data entry, invoice matching, scheduled report generation, status updates triggered by fixed events. These processes are deterministic by design. Adding an agent here adds cost and failure surface without adding meaningful value.
+
+**High variability, high complexity** is where agents earn their cost. Customer support triage across a large, evolving product. Contract review where clauses vary and context matters. Sales prospecting research that requires synthesising information from multiple sources. The agent's ability to reason about novel situations is the value.
+
+The middle cells are where the decision gets nuanced.
+
+---
+
+## Three Real-World Examples
+
+### When Rule-Based Won
+
+A logistics company wanted to automate invoice processing — extracting line items, matching them against purchase orders, and flagging discrepancies for human review.
+
+The initial instinct was to build an agent. In evaluation, it turned out that 94% of invoices followed one of five formats. A combination of document parsing and rule-based matching handled those cases perfectly. The remaining 6% — unusual formats, complex multi-currency invoices, disputes — were routed to a human queue.
+
+Total automation rate: 94%. Cost: a fraction of an agent-based solution. The agent would have handled all cases, but for this volume and this edge-case rate, the rule-based approach was the right call.
+
+### When the Agent Earned Its Cost
+
+A professional services firm wanted to automate the first stage of client engagement — reviewing incoming project briefs, assessing scope, identifying missing information, and drafting an initial proposal outline.
+
+Every brief was different. Clients used different terminology, structured their requirements differently, and had different levels of specificity. A rule-based approach would have required maintaining hundreds of conditional branches that could never keep pace with the variety of incoming work.
+
+An agent reduced the time from receipt of brief to proposal draft from two days to two hours — a measurable ROI that justified both the build cost and the ongoing API spend.
+
+### The Hybrid Architecture
+
+A SaaS company's customer onboarding process had two parts: account setup (deterministic — create account, send welcome email, provision resources) and personalisation (variable — review the user's stated goals and configure recommendations accordingly).
+
+They automated the deterministic part with linear automation and used an agent only for the personalisation step. This is the most common production architecture: linear automation handles the predictable majority, agents handle the parts that require judgement.
+
+---
+
+## The Cost Question
+
+Agents are meaningfully more expensive to run than linear automation. Every LLM call has a per-token cost. Agents make multiple LLM calls per workflow execution. For high-volume processes — hundreds of thousands of executions per month — that cost compounds quickly.
+
+Before choosing agents, model the expected cost at production volume. If the per-execution cost of an agent is $0.05 and you run 500,000 executions per month, that is $25,000/month in API costs alone. If rule-based automation can handle 85% of cases for $0.001 per execution and only the remaining 15% need an agent, your blended cost drops dramatically.
+
+The answer is not always to minimise cost — sometimes the business value of full automation at scale justifies the spend. But the cost calculation should be explicit before you commit to the architecture.
+
+---
+
+## The Right Question to Start With
+
+Before asking "should we build an agent?", ask: "how much of the input variation and process complexity in this workflow actually requires AI reasoning?"
+
+If the answer is "most of it", agents are likely the right tool. If the answer is "a small fraction", consider whether a hybrid approach — linear automation for the majority, agents or human escalation for the exceptions — gets you 90% of the value at 30% of the cost.
+
+The goal is not to use the most sophisticated technology available. It is to match the tool to the problem, and then execute it well enough that it stays reliable at production scale.
+
+If you are scoping an automation project and want help working through which parts suit agents versus rule-based approaches, [book a strategy call](/contact) — that scoping conversation is free.

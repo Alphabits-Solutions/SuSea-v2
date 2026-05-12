@@ -65,6 +65,7 @@ export default function Footer() {
               width={140}
               height={36}
               className="h-9 w-auto"
+              style={{ filter: "brightness(0) invert(1)" }}
             />
           </Link>
           <p className="text-[#e4e2e4]/60 font-headline text-sm leading-relaxed max-w-xs">

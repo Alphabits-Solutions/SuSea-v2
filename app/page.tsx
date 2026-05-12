@@ -11,9 +11,9 @@ import JsonLd from "@/components/JsonLd";
 import { buildMetadata, ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from "@/lib/metadata";
 
 export const metadata = buildMetadata({
-  title: "Susea.ai — The Digital Architect for Enterprise AI",
+  title: "Susea.ai | Custom AI Agents & Professional AI Agent Repair",
   description:
-    "We fix broken AI agents, build new ones, ship software, and consult teams — so your business runs better, faster, and smarter. AI agency serving USA & Europe.",
+    "We build reliable, autonomous AI agents and fix failing ones. Eliminate hallucinations and loops with production-ready AI agentic workflows.",
   path: "",
 });
 
