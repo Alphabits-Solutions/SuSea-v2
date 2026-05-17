@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 
 interface FormState {
   name: string;
+  email: string;
   company: string;
   country: string;
   industry: string;
@@ -14,6 +15,7 @@ interface FormState {
 
 const INITIAL: FormState = {
   name: "",
+  email: "",
   company: "",
   country: "",
   industry: "",
@@ -79,6 +81,24 @@ export default function ContactForm() {
               />
             </div>
             <div className="space-y-2">
+              <label htmlFor="email" className="block text-xs font-mono uppercase tracking-widest text-outline">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="john@acme.com"
+                value={form.email}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-2">
               <label htmlFor="company" className="block text-xs font-mono uppercase tracking-widest text-outline">
                 Company
               </label>
@@ -92,9 +112,6 @@ export default function ContactForm() {
                 className={inputClass}
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
               <label htmlFor="country" className="block text-xs font-mono uppercase tracking-widest text-outline">
                 Country
@@ -109,6 +126,9 @@ export default function ContactForm() {
                 className={inputClass}
               />
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
               <label htmlFor="industry" className="block text-xs font-mono uppercase tracking-widest text-outline">
                 Industry
@@ -123,25 +143,24 @@ export default function ContactForm() {
                 className={inputClass}
               />
             </div>
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="service" className="block text-xs font-mono uppercase tracking-widest text-outline">
-              Service needed
-            </label>
-            <select
-              id="service"
-              name="service"
-              value={form.service}
-              onChange={handleChange}
-              className={`${inputClass} appearance-none`}
-            >
-              <option className="bg-surface">AI Strategy Consultation</option>
-              <option className="bg-surface">Custom LLM Development</option>
-              <option className="bg-surface">Automation Workflow</option>
-              <option className="bg-surface">AI Code Rescue</option>
-              <option className="bg-surface">Security Review</option>
-            </select>
+            <div className="space-y-2">
+              <label htmlFor="service" className="block text-xs font-mono uppercase tracking-widest text-outline">
+                Service needed
+              </label>
+              <select
+                id="service"
+                name="service"
+                value={form.service}
+                onChange={handleChange}
+                className={`${inputClass} appearance-none`}
+              >
+                <option className="bg-surface">AI Strategy Consultation</option>
+                <option className="bg-surface">Custom LLM Development</option>
+                <option className="bg-surface">Automation Workflow</option>
+                <option className="bg-surface">AI Code Rescue</option>
+                <option className="bg-surface">Security Review</option>
+              </select>
+            </div>
           </div>
 
           <div className="space-y-2">

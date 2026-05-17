@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import sgMail from "@sendgrid/mail";
+import { supabase } from "@/lib/supabase";
 
 const SG_KEY   = process.env.SENDGRID_API_KEY    ?? "";
 const FROM     = process.env.SENDGRID_FROM_EMAIL ?? "hello@susea.ai";
@@ -10,6 +11,7 @@ if (SG_KEY) sgMail.setApiKey(SG_KEY);
 
 interface ContactPayload {
   name:      string;
+  email:     string;
   company?:  string;
   country?:  string;
   industry?: string;
@@ -22,18 +24,20 @@ export async function POST(request: Request) {
   try {
     const body = (await request.json()) as ContactPayload;
 
-    if (!body.name?.trim() || !body.message?.trim()) {
+    if (!body.name?.trim() || !body.email?.trim() || !body.message?.trim()) {
       return NextResponse.json(
-        { error: "Name and message are required." },
+        { error: "Name, email, and message are required." },
         { status: 400 }
       );
     }
 
-    const name = body.name.trim();
+    const name  = body.name.trim();
+    const email = body.email.trim();
 
     // ── Team notification ─────────────────────────────────────────────────────
     const rows = [
       ["Name",     name],
+      ["Email",    email],
       ["Company",  body.company  ?? "—"],
       ["Country",  body.country  ?? "—"],
       ["Industry", body.industry ?? "—"],
@@ -105,22 +109,38 @@ export async function POST(request: Request) {
 </table>
 </body></html>`;
 
+    // Persist lead to Supabase
+    if (supabase) {
+      const { error } = await supabase.from("contacts").insert({
+        name,
+        email,
+        company:  body.company  ?? null,
+        country:  body.country  ?? null,
+        industry: body.industry ?? null,
+        service:  body.service  ?? null,
+        message:  body.message.trim(),
+        referral: body.referral ?? null,
+      });
+      if (error) console.error("[contact] Supabase insert failed:", error.message);
+    } else {
+      console.warn("[contact] Supabase not configured — lead not persisted.");
+    }
+
     if (SG_KEY) {
       await Promise.all([
-        // Notify team
         sgMail.send({
           to: TEAM, from: FROM,
           subject: `New enquiry from ${name}`,
           html: teamHtml,
         }),
-        // Auto-reply to sender (only if we have their email — contact form should include it)
-        // TODO: add an `email` field to the contact form and pass it here
-        // sgMail.send({ to: body.email, from: FROM, subject: `We got your message — Susea.ai`, html: replyHtml }),
+        sgMail.send({
+          to: email, from: FROM,
+          subject: "We got your message — Susea.ai",
+          html: replyHtml,
+        }),
       ]).catch(err => console.error("[contact] SendGrid failed:", err));
     } else {
       console.warn("[contact] SENDGRID_API_KEY not set — email skipped.");
-      // Still log the reply HTML for dev preview
-      void replyHtml;
     }
 
     return NextResponse.json({ success: true }, { status: 200 });
